@@ -5,7 +5,10 @@ import { CgProfile } from "react-icons/cg";
 import { FaUserPlus, FaUsers } from "react-icons/fa";
 import { MdLockPerson } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
-import { useAppContext } from "../context/AppContext";
+import { API_URL, useAppContext } from "../context/AppContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   const navDetails = [
@@ -22,19 +25,46 @@ const Navbar = () => {
       icon: <IoSettingsOutline size={25} />,
       linkName: "Settings",
     },
-    {
-      link: "/auth",
-      icon: <MdLockPerson size={25} />,
-      linkName: "Login/Signup",
-    },
+    // {
+    //   link: "/auth",
+    //   icon: <MdLockPerson size={25} />,
+    //   linkName: "Login/Signup",
+    // },
   ];
 
   const { pathname } = useLocation();
   const { mobileNav, setMobileNav } = useAppContext();
+  const queryClient = useQueryClient();
+
+  const handleLogout = () => {
+    if (confirm("Are you sure want to logout!")) {
+      mutate();
+      console.log("Log out");
+    }
+  };
+
+  const { mutate } = useMutation({
+    mutationFn: async () => {
+      const res = await axios.post(
+        API_URL + "/auth/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(res);
+    },
+    onSuccess: () => {
+      toast.success("User logout!");
+      queryClient.invalidateQueries({ queryKey: ["authUser"] });
+    },
+  });
+
+  // const { data: authUser, isPending } = useQuery({ queryKey: ["authUser"] });
 
   return (
     <>
-      {/* Backdrop Overlay (like YouTube's) */}
+      {/* Backdrop Overlay */}
       {mobileNav && (
         <div
           className="fixed inset-0 bg-black/50 z-40 md:hidden"
@@ -69,6 +99,19 @@ const Navbar = () => {
                 </li>
               );
             })}
+            {/* <li>
+                  <Link
+                    to='/auth'
+                    className={`px-2 py-2 flex items-center gap-3 rounded transition-colors duration-300 ${
+                      isActive
+                        ? "bg-appColor text-white"
+                        : "hover:text-appColor text-black"
+                    }`}
+                  >
+                    {item.icon}
+                    <span className="text-lg">{item.linkName}</span>
+                  </Link>
+                </li> */}
           </ul>
         </nav>
 
@@ -80,7 +123,10 @@ const Navbar = () => {
               <span className="text-gray-500">@username</span>
             </div>
           </div>
-          <button className="w-full my-1 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer">
+          <button
+            className="w-full my-1 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
+            onClick={handleLogout}
+          >
             <span className="text-lg font-semibold">Logout</span>
             <LuLogOut size={20} />
           </button>
@@ -166,7 +212,10 @@ const Navbar = () => {
                 <span className="text-gray-500">@username</span>
               </div>
             </div>
-            <button className="w-full my-1 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer">
+            <button
+              className="w-full my-1 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
+              onClick={handleLogout}
+            >
               <span className="text-lg font-semibold">Logout</span>
               <LuLogOut size={20} />
             </button>

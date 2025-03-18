@@ -36,6 +36,23 @@
   animation: slideOut 0.3s ease-in forwards;
 }
 
+/* spinner  */
+.loader {
+  width: 25px;
+  height: 25px;
+  margin-inline: 5px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #1d9bf0;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .yoki {
   @apply border-2 border-red-500;
 }
