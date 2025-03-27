@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 
 const Authpage = () => {
   const [formData, setFormData] = useState({
-    // email: "",
     username: "",
     password: "",
   });
