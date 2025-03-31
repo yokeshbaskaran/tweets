@@ -99,13 +99,13 @@ const Navbar = () => {
 
       {/* Desktop Sidebar */}
       <header className="hidden fixed top-0 left-0 h-screen w-[220px] bg-white px-2 py-1 md:flex flex-col">
-        <div className="px-2 py-3 flex items-center gap-2">
+        <Link to="/" className="px-2 py-3 flex items-center gap-2">
           <img src="logo.png" alt="logo" width={30} height={30} />
           <h2 className="text-2xl font-medium text-app">Tweets</h2>
-        </div>
+        </Link>
 
-        <nav className="mb-auto">
-          <ul className="flex flex-col gap-2">
+        <nav className="mb-auto mt-2">
+          <ul className="flex flex-col gap-3">
             {navDetails.map((item, idx) => {
               const isActive = pathname === item.link;
 
@@ -128,6 +128,7 @@ const Navbar = () => {
           </ul>
         </nav>
 
+        {/* User profile  */}
         {authUser && (
           <div className="my-5 px-2">
             <div className="flex items-center gap-0">
@@ -174,10 +175,10 @@ const Navbar = () => {
               }}
               className="p-2 rounded-full transition-transform duration-300 hover:scale-105 hover:bg-neutral-200"
             />
-            <div className="flex items-center gap-1 cursor-pointer">
+            <Link to="/" className="flex items-center gap-1 cursor-pointer">
               <img src="logo.png" alt="logo" width={30} height={30} />
               <h2 className="text-2xl font-medium text-app">Tweets</h2>
-            </div>
+            </Link>
           </div>
 
           {!authUser ? (
@@ -225,10 +226,10 @@ const Navbar = () => {
               }}
               className="p-2 rounded-full hover:bg-neutral-200"
             />
-            <div className="flex items-center gap-1 cursor-pointer">
+            <Link to="/" className="flex items-center gap-1 cursor-pointer">
               <img src="logo.png" alt="logo" width={30} height={30} />
               <h2 className="text-2xl font-medium text-app">Tweets</h2>
-            </div>
+            </Link>
           </div>
 
           <nav className="mb-auto py-5">

@@ -4,7 +4,6 @@ const Suggested = () => {
   return (
     <div className="max-md:hidden w-[250px] px-2 py-2">
       <div>
-        <RecentPosts />
         <UserSuggestions />
       </div>
     </div>
