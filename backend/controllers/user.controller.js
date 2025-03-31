@@ -83,9 +83,11 @@ const getSuggestedUsers = async (req, res) => {
     );
     // console.log("filterUsers", filterUsers);
 
-    const suggested = filterUsers.slice(0, 4);
+    const suggested = filterUsers
+      .slice(0, 4)
+      .sort((a, b) => b.createdAt - a.createdAt);
     suggested.forEach((user) => (user.password = null));
-    // console.log("suggested", suggested);
+    console.log("suggested", suggested);
 
     res.status(200).json(suggested);
   } catch (error) {

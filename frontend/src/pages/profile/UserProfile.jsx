@@ -5,25 +5,45 @@ import { GoHeart } from "react-icons/go";
 import { BsDot } from "react-icons/bs";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const Profile = () => {
   const { authUser } = useAppContext();
   console.log(authUser);
+
+  const { username } = useParams();
+
+  const { data: user } = useQuery({
+    queryKey: ["userProfile"],
+    queryFn: async () => {
+      try {
+        const res = await axios.get(API_URL + `/users/profile/${username}`, {
+          withCredentials: true,
+        });
+        const data = await res.data;
+        return data;
+      } catch (error) {
+        console.log("Error in user profile", error);
+      }
+    },
+  });
+
+  console.log("user", user);
 
   const handleEditProfile = () => {
     console.log("edit profile");
   };
 
   return (
-    <div className="flex">
+    <>
       <div className="flex-1">
         <div className="w-full bg-white overflow-hidden">
           {/* Cover Image */}
-
-          {/* Cover Image */}
-          {authUser?.coverImg ? (
+          {user?.coverImg ? (
             <img
-              src={authUser.coverImg}
+              src={user.coverImg}
               alt="user-profile"
               className="w-full h-32 rounded-lg object-cover"
             />
@@ -38,9 +58,9 @@ const Profile = () => {
           <div className="flex justify-center -mt-12">
             <div className="size-20 bg-white rounded-full flex items-center justify-center shadow-md  outline-white outline-4">
               <span className="text-lg font-semibold text-gray-800">
-                {authUser?.profileImg ? (
+                {user?.profileImg ? (
                   <img
-                    src={authUser.profileImg}
+                    src={user.profileImg}
                     className="size-28 object-cover"
                     alt="user-profile"
                   />
@@ -53,8 +73,8 @@ const Profile = () => {
 
           {/* Profile Details */}
           <div className="text-center mt-5">
-            <h2 className="text-xl font-semibold">{authUser?.username}</h2>
-            <p className="text-gray-500">{authUser?.bio}</p>
+            <h2 className="text-xl font-semibold">{user?.username}</h2>
+            <p className="text-gray-500">{user?.bio}</p>
           </div>
 
           {/* Stats */}
@@ -79,7 +99,7 @@ const Profile = () => {
               onClick={handleEditProfile}
               className="px-4 py-2 rounded-md bg-appColor text-white hover:opacity-80"
             >
-              Edit Profile
+              Follow / Unfollow
             </button>
           </div>
 
@@ -92,7 +112,9 @@ const Profile = () => {
 
           {/* Posts Section */}
           <div className="px-2 py-3">
-            <h3 className="text-lg font-semibold">Your Posts</h3>
+            <h3 className="text-lg font-semibold capitalize">
+              {user?.username}'s Posts
+            </h3>
 
             {/* Single Post */}
 
@@ -100,9 +122,9 @@ const Profile = () => {
               <div className="flex gap-3 items-start">
                 <div>
                   {/* User profile img  */}
-                  {authUser?.profileImg ? (
+                  {user?.profileImg ? (
                     <img
-                      src={authUser.profileImg}
+                      src={user.profileImg}
                       className="w-12 h-12 object-cover"
                       alt="user-profile"
                     />
@@ -143,11 +165,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-
-      <div>
-        <Suggested />
-      </div>
-    </div>
+    </>
   );
 };
 

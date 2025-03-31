@@ -9,6 +9,10 @@ import Homepage from "./pages/home/Homepage";
 import Profile from "./pages/common/Profile";
 import Followers from "./pages/common/Followers";
 import Following from "./pages/common/Following";
+import CreatePost from "./pages/common/CreatePost";
+import Search from "./pages/common/Search";
+import Notifications from "./pages/common/Notifications";
+import UserProfile from "./pages/profile/UserProfile";
 
 const App = () => {
   const ProtectedRoute = ({ children }) => {
@@ -40,6 +44,38 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/user/profile/:username"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="search"
+              element={
+                <ProtectedRoute>
+                  <Search />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="notifications"
+              element={
+                <ProtectedRoute>
+                  <Notifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="create"
+              element={
+                <ProtectedRoute>
+                  <CreatePost />
                 </ProtectedRoute>
               }
             />

@@ -5,6 +5,9 @@ import { CgProfile } from "react-icons/cg";
 import { FaUserPlus, FaUsers } from "react-icons/fa";
 import { MdLockPerson } from "react-icons/md";
 import { LuLogOut } from "react-icons/lu";
+import { TbBellRinging } from "react-icons/tb";
+import { IoSearch } from "react-icons/io5";
+import { BiMessageRoundedAdd } from "react-icons/bi";
 import { API_URL, useAppContext } from "../context/AppContext";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
@@ -60,16 +63,31 @@ const Navbar = () => {
       icon: <CgProfile size={25} />,
       linkName: "Profile",
     },
+    // {
+    //   link: "/search",
+    //   icon: <IoSearch size={25} />,
+    //   linkName: "Search",
+    // },
     {
-      link: "/followers",
-      icon: <FaUsers size={25} />,
-      linkName: "Followers",
+      link: "/notifications",
+      icon: <TbBellRinging size={25} />,
+      linkName: "Notifications",
     },
     {
-      link: "/following",
-      icon: <FaUserPlus size={25} />,
-      linkName: "Following",
+      link: "/create",
+      icon: <BiMessageRoundedAdd size={25} />,
+      linkName: "Create Post",
     },
+    // {
+    //   link: "/followers",
+    //   icon: <FaUsers size={25} />,
+    //   linkName: "Followers",
+    // },
+    // {
+    //   link: "/following",
+    //   icon: <FaUserPlus size={25} />,
+    //   linkName: "Following",
+    // },
   ];
 
   const unauthenticatedNav = [
@@ -100,7 +118,7 @@ const Navbar = () => {
       {/* Desktop Sidebar */}
       <header className="hidden fixed top-0 left-0 h-screen w-[220px] bg-white px-2 py-1 md:flex flex-col">
         <Link to="/" className="px-2 py-3 flex items-center gap-2">
-          <img src="logo.png" alt="logo" width={30} height={30} />
+          <img src="/logo.png" alt="logo" width={30} height={30} />
           <h2 className="text-2xl font-medium text-app">Tweets</h2>
         </Link>
 
@@ -176,7 +194,7 @@ const Navbar = () => {
               className="p-2 rounded-full transition-transform duration-300 hover:scale-105 hover:bg-neutral-200"
             />
             <Link to="/" className="flex items-center gap-1 cursor-pointer">
-              <img src="logo.png" alt="logo" width={30} height={30} />
+              <img src="/logo.png" alt="logo" width={30} height={30} />
               <h2 className="text-2xl font-medium text-app">Tweets</h2>
             </Link>
           </div>
@@ -227,7 +245,7 @@ const Navbar = () => {
               className="p-2 rounded-full hover:bg-neutral-200"
             />
             <Link to="/" className="flex items-center gap-1 cursor-pointer">
-              <img src="logo.png" alt="logo" width={30} height={30} />
+              <img src="/logo.png" alt="logo" width={30} height={30} />
               <h2 className="text-2xl font-medium text-app">Tweets</h2>
             </Link>
           </div>
