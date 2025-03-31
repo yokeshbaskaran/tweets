@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { useFetchUser } from "../hooks/useFetchUser";
+import axios from "axios";
 
 const AppContext = createContext();
 
@@ -13,6 +14,17 @@ export const AppContextProvider = ({ children }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const { data: authUser, isLoading, refetch } = useFetchUser();
 
+  // useEffect(() => {
+  //   getUsers();
+  // }, []);
+
+  // const getUsers = async () => {
+  //   const res = await axios.get(API_URL + "/users/suggested", {
+  //     withCredentials: true,
+  //   });
+  //   const data = res.data;
+  //   console.log(data);
+  // };
   const contextValues = {
     mobileNav,
     setMobileNav,
@@ -20,6 +32,7 @@ export const AppContextProvider = ({ children }) => {
     isLoading,
     refetch,
   };
+
   return (
     <>
       <AppContext.Provider value={contextValues}>

@@ -1,6 +1,5 @@
 const User = require("../models/user");
 const bcrypt = require("bcryptjs");
-// const jwt = require("jsonwebtoken");
 const generateToken = require("../middleware/generateToken");
 
 const getMe = async (req, res) => {

@@ -6,6 +6,9 @@ const PORT = 3005 || process.env.PORT;
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/auth.route");
+const userRoutes = require("./routes/user.route");
+const postRoutes = require("./routes/post.route");
+const notificationRoutes = require("./routes/notifications.route");
 const mongoose = require("mongoose");
 
 app.use(express.json({ limit: "5mb" }));
@@ -27,6 +30,9 @@ mongoose
   });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/users", userRoutes);
+app.use("/api/posts", postRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);

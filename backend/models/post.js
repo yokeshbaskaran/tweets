@@ -7,19 +7,18 @@ const postSchema = new mongoose.Schema(
       ref: "user",
       default: [],
     },
-    img: {
-      type: String,
-      default: "",
-    },
     text: {
       type: String,
       required: true,
+    },
+    img: {
+      type: String,
+      default: "",
     },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "user",
-        default: [],
       },
     ],
     comments: [
@@ -31,7 +30,7 @@ const postSchema = new mongoose.Schema(
         user: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "user",
-          default: [],
+          required: true,
         },
       },
     ],
