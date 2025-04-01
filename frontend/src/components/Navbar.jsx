@@ -150,7 +150,7 @@ const Navbar = () => {
         {authUser && (
           <div className="my-5 px-2">
             <div className="flex items-center gap-0">
-              <Link to="profile" className="cursor-pointer">
+              <Link to="profile">
                 {authUser?.profileImg ? (
                   <img
                     src={authUser.profileImg}
@@ -210,7 +210,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="px-2">
-              <Link to="profile" className="cursor-pointer">
+              <Link to="profile">
                 {authUser?.profileImg ? (
                   <img
                     src={authUser.profileImg}
@@ -276,7 +276,7 @@ const Navbar = () => {
           {authUser && (
             <div className="my-5 px-2">
               <div className="flex items-start gap-0">
-                <Link to="profile" className="cursor-pointer">
+                <Link to="profile">
                   {authUser?.profileImg ? (
                     <img
                       src={authUser.profileImg}

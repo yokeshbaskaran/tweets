@@ -5,7 +5,6 @@ import { GoHeart } from "react-icons/go";
 import { BsDot } from "react-icons/bs";
 import { IoShareSocialOutline } from "react-icons/io5";
 import { IoTrashOutline } from "react-icons/io5";
-import EditMyProfile from "./EditMyProfile";
 import { Link } from "react-router-dom";
 
 const Profile = () => {

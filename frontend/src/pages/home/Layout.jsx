@@ -7,7 +7,7 @@ const Layout = () => {
       <Navbar />
 
       <div className="w-full md:ml-[220px] md:px-2 py-1 flex-1">
-        <div className="max-md:pt-15 overflow-hidden">
+        <div className="max-md:pt-15 pb-8 overflow-hidden">
           <Outlet />
         </div>
       </div>
