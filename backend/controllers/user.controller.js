@@ -19,6 +19,8 @@ const followUnFollowUser = async (req, res) => {
   try {
     const { id } = req.params;
     const userId = req.user._id;
+    // console.log("ids", id, userId);
+
     const userToModify = await User.findById(id);
     const currentUser = await User.findById(userId);
 
@@ -87,7 +89,7 @@ const getSuggestedUsers = async (req, res) => {
       .slice(0, 4)
       .sort((a, b) => b.createdAt - a.createdAt);
     suggested.forEach((user) => (user.password = null));
-    console.log("suggested", suggested);
+    // console.log("suggested", suggested);
 
     res.status(200).json(suggested);
   } catch (error) {

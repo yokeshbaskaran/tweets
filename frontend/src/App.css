@@ -3,6 +3,7 @@
 
 * {
   font-family: "Outfit", sans-serif;
+  resize: none;
 }
 
 @theme {
@@ -51,6 +52,10 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.input-form {
+  @apply w-full my-1 mb-2 px-2 py-2 border border-gray-300 rounded focus:outline-appColor;
 }
 
 .yoki {

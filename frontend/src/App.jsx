@@ -6,18 +6,20 @@ import Login from "./pages/auth/Login";
 import Signup from "./pages/auth/Signup";
 import Layout from "./pages/home/Layout";
 import Homepage from "./pages/home/Homepage";
-import Profile from "./pages/common/Profile";
+import Profile from "./pages/profile/Profile";
 import Followers from "./pages/common/Followers";
 import Following from "./pages/common/Following";
 import CreatePost from "./pages/common/CreatePost";
 import Search from "./pages/common/Search";
 import Notifications from "./pages/common/Notifications";
 import UserProfile from "./pages/profile/UserProfile";
+import EditMyProfile from "./pages/profile/EditMyProfile";
 
 const App = () => {
   const ProtectedRoute = ({ children }) => {
     const { authUser } = useAppContext();
     return authUser ? children : <Navigate to="/login" />;
+    // return children;
   };
 
   const AuthRedirect = ({ children }) => {
@@ -44,6 +46,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="profile/edit"
+              element={
+                <ProtectedRoute>
+                  <EditMyProfile />
                 </ProtectedRoute>
               }
             />

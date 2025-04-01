@@ -86,25 +86,25 @@ const Authpage = () => {
           </div>
 
           <form className="lg:px-3">
-            <div className="mt-5 flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-appColor">
+            <div className="mt-5">
               <input
                 name="username"
                 type="text"
                 placeholder="Enter username"
                 value={formData.username}
                 onChange={handleInputChange}
-                className="block min-w-0 grow py-2 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                className="input-form  placeholder:text-gray-400"
               />
             </div>
 
-            <div className="mt-5 flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-appColor">
+            <div className="mt-2">
               <input
                 name="password"
                 type="password"
                 placeholder="Enter password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="block min-w-0 grow py-2 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
+                className="input-form  placeholder:text-gray-400"
               />
             </div>
 

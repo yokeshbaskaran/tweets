@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_URL } from "../context/AppContext";
 import { RxAvatar } from "react-icons/rx";
 import { Link } from "react-router-dom";
+import useFollow from "../hooks/useFollow";
 
 const Suggested = () => {
   const { data: suggestedUsers } = useQuery({
@@ -20,10 +21,18 @@ const Suggested = () => {
     },
   });
 
+  const { follow, isPending } = useFollow();
+
   return (
-    <div className="max-md:hidden w-[250px] px-2 py-2">
+    <div className="max-md:hidden w-[220px] px-2 py-2">
       <div>
-        <UserSuggestions suggestedUsers={suggestedUsers} />
+        {suggestedUsers?.length > 0 && (
+          <UserSuggestions
+            suggestedUsers={suggestedUsers}
+            follow={follow}
+            isPending={isPending}
+          />
+        )}
       </div>
     </div>
   );
@@ -31,7 +40,7 @@ const Suggested = () => {
 
 export default Suggested;
 
-export const UserSuggestions = ({ suggestedUsers }) => {
+export const UserSuggestions = ({ suggestedUsers, follow }) => {
   return (
     <div className="px-2">
       <div>
@@ -65,7 +74,13 @@ export const UserSuggestions = ({ suggestedUsers }) => {
                     <span className="text-gray-500">@{post.username}</span>
                   </div>
 
-                  <button className="ml-auto self-center capitalize m-1 px-3 py-1 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer">
+                  <button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      follow(post._id);
+                    }}
+                    className="ml-auto self-center capitalize m-1 px-3 py-1 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
+                  >
                     <span className="px-1">follow</span>
                   </button>
                 </div>

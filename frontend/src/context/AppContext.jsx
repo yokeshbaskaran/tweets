@@ -1,6 +1,5 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 import { useFetchUser } from "../hooks/useFetchUser";
-import axios from "axios";
 
 const AppContext = createContext();
 
