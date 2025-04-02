@@ -1,9 +1,4 @@
 import React from "react";
-import { POSTS } from "../../db/dummy.js";
-import { BsDot } from "react-icons/bs";
-import { GoHeart } from "react-icons/go";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { RxAvatar } from "react-icons/rx";
 import SinglePost from "./SinglePost";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -13,6 +8,7 @@ const AllPosts = () => {
   const { data: posts } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
+      // all-posts
       try {
         const res = await axios.get(API_URL + "/posts/all", {
           withCredentials: true,

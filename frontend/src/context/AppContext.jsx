@@ -13,17 +13,6 @@ export const AppContextProvider = ({ children }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const { data: authUser, isLoading, refetch } = useFetchUser();
 
-  // useEffect(() => {
-  //   getUsers();
-  // }, []);
-
-  // const getUsers = async () => {
-  //   const res = await axios.get(API_URL + "/users/suggested", {
-  //     withCredentials: true,
-  //   });
-  //   const data = res.data;
-  //   console.log(data);
-  // };
   const contextValues = {
     mobileNav,
     setMobileNav,

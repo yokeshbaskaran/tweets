@@ -8,10 +8,10 @@ const fetchUserDetails = async () => {
       withCredentials: true,
     });
 
-    const data = response.data;
+    const data = await response.data;
     return data;
   } catch (error) {
-    console.log("Error in getMe", error.message);
+    console.log("Error in getMe:", error.message);
   }
 };
 

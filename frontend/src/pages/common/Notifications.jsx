@@ -4,7 +4,7 @@ import { IoHeart } from "react-icons/io5";
 import { RxAvatar } from "react-icons/rx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import { API_URL } from "../../context/AppContext";
+import { API_URL, useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -43,14 +43,14 @@ const Notifications = () => {
     },
   });
 
-  // console.log("notifications", notifications);
-
   const handleDeleteNotifications = () => {
     if (confirm("Are you sure want to delete allnotifications! ")) {
       console.log("all notifications Deleted");
       deleteNotifications();
     }
   };
+
+  // console.log("notifications", notifications);
 
   return (
     <section className="px-2">
@@ -83,17 +83,27 @@ const Notifications = () => {
 export default Notifications;
 
 export const SingleNotification = ({ notification }) => {
+  const { authUser } = useAppContext();
+  const isMyProfile = authUser?.username === notification?.from?.username;
+  console.log("notification", notification);
   return (
     <div>
       <div className="py-1 border-b border-gray-300">
         <div className="flex justify-between items-center gap-2 py-2">
           <Link to={`/user/profile/${notification.from.username}`}>
-            {/* <div className="avatar">
-              <div className="size-12 rounded-full">
-                <img src={notification.from?.profileImg} alt="user-pic" />
-              </div>
-            </div> */}
-            {notification.from?.profileImg ? (
+            {/* Profile Image Container */}
+            <div className="size-14 object-cover rounded-full">
+              {notification.from?.profileImg ? (
+                <img
+                  src={notification.from?.profileImg}
+                  alt="user-pic"
+                  className="size-full object-contain"
+                />
+              ) : (
+                <RxAvatar className="size-full px-2" />
+              )}
+            </div>
+            {/* {notification.from?.profileImg ? (
               <img
                 src={notification.from?.profileImg}
                 alt="user-profile"
@@ -103,21 +113,28 @@ export const SingleNotification = ({ notification }) => {
               <>
                 <RxAvatar size={40} color="#1d9bf0" />
               </>
-            )}
+            )} */}
           </Link>
 
           <div className="flex items-center mr-auto gap-2">
-            <Link
-              to={`/user/profile/${notification.from.username}`}
-              className="text-lg font-bold"
-            >
-              @{notification.from?.username}
-            </Link>{" "}
+            {isMyProfile ? (
+              ""
+            ) : (
+              <Link
+                to={`/user/profile/${notification.from.username}`}
+                className="text-lg font-bold"
+              >
+                @{notification.from?.username}
+              </Link>
+            )}
+
             <span className="text-gray-500">
               {" "}
-              {notification.type === "follow"
-                ? "followed you"
-                : "liked your post"}
+              {notification.type === "like"
+                ? isMyProfile
+                  ? "you liked your post"
+                  : "liked your post"
+                : "followed you"}
             </span>
           </div>
 

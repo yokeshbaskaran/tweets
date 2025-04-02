@@ -3,7 +3,7 @@ const User = require("../models/user");
 
 const getUserProfile = async (req, res) => {
   const { username } = req.params;
-  console.log("username", username);
+  // console.log("username", username);
   try {
     const user = await User.findOne({ username }).select("-password");
     if (!user) return res.status(404).json({ message: "user not found!" });
@@ -11,6 +11,26 @@ const getUserProfile = async (req, res) => {
     res.status(200).json(user);
   } catch (error) {
     console.log("Error in getUserProfile", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+const getUserFollow = async (req, res) => {
+  try {
+    const userId = req.user._id.toString();
+    // console.log("user-id", userId);
+
+    const user = await User.findById({ _id: userId });
+    if (!user) return res.status(404).json({ message: "Userid not found!" });
+
+    const [followers, following] = await Promise.all([
+      User.find({ _id: { $in: user.followers } }).select("-password"),
+      User.find({ _id: { $in: user.following } }).select("-password"),
+    ]);
+
+    res.status(200).json({ followers, following });
+  } catch (error) {
+    console.log("Error in getUserFollow", error.message);
     res.status(500).json({ error: error.message });
   }
 };
@@ -177,6 +197,7 @@ const updateUser = async (req, res) => {
 
 module.exports = {
   getUserProfile,
+  getUserFollow,
   getSuggestedUsers,
   followUnFollowUser,
   updateUser,

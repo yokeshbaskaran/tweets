@@ -59,7 +59,7 @@ const Navbar = () => {
       linkName: "Home",
     },
     {
-      link: "/profile",
+      link: "/myprofile",
       icon: <CgProfile size={25} />,
       linkName: "Profile",
     },
@@ -150,17 +150,19 @@ const Navbar = () => {
         {authUser && (
           <div className="my-5 px-2">
             <div className="flex items-center gap-0">
-              <Link to="profile">
+              <Link
+                to="myprofile"
+                className="size-14 -mt-1 object-cover rounded-full"
+              >
+                {/* Profile Image Container */}
                 {authUser?.profileImg ? (
                   <img
-                    src={authUser.profileImg}
-                    alt="user-profile"
-                    className="size-14"
+                    src={authUser?.profileImg}
+                    alt="user-pic"
+                    className="size-full object-contain"
                   />
                 ) : (
-                  <>
-                    <RxAvatar size={40} color="#1d9bf0" />
-                  </>
+                  <RxAvatar className="size-full px-2" />
                 )}
               </Link>
 
@@ -210,7 +212,7 @@ const Navbar = () => {
             </div>
           ) : (
             <div className="px-2">
-              <Link to="profile">
+              <Link to="myprofile">
                 {authUser?.profileImg ? (
                   <img
                     src={authUser.profileImg}
@@ -275,8 +277,8 @@ const Navbar = () => {
 
           {authUser && (
             <div className="my-5 px-2">
-              <div className="flex items-start gap-0">
-                <Link to="profile">
+              <div className="flex items-start gap-2">
+                <Link to="myprofile">
                   {authUser?.profileImg ? (
                     <img
                       src={authUser.profileImg}

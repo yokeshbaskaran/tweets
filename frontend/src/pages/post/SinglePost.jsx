@@ -9,15 +9,18 @@ import { FaRegComment } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { API_URL, useAppContext } from "../../context/AppContext";
+import { Link, useNavigate } from "react-router-dom";
 
-const SinglePost = ({ post }) => {
+const SinglePost = ({ post, username }) => {
   const { _id, text, img, likes, comments, user } = post;
-  //   console.log("post", post);
+  // console.log("post", post);
 
+  const usernameFromParent = username || "";
   const { authUser } = useAppContext();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const isLiked = likes.includes(authUser._id);
+  const isLiked = likes?.includes(authUser?._id);
 
   const { mutate: likePost, isPending: isLiking } = useMutation({
     mutationFn: async () => {
@@ -30,7 +33,7 @@ const SinglePost = ({ post }) => {
           }
         );
         const data = res.data;
-        console.log("data", data);
+        // console.log("data", data);
         return data;
       } catch (error) {
         console.log("like-post", error);
@@ -47,10 +50,18 @@ const SinglePost = ({ post }) => {
           return post;
         });
       });
+
+      // Update profile page posts
+      queryClient.setQueryData(["userAllPosts", usernameFromParent], (old) => {
+        return old?.map((post) =>
+          post._id === _id ? { ...post, likes: updatedLikes } : post
+        );
+      });
     },
   });
 
-  const handleLikePost = () => {
+  const handleLikePost = (e) => {
+    e.preventDefault();
     if (isLiking) return;
     likePost();
   };
@@ -61,36 +72,61 @@ const SinglePost = ({ post }) => {
     toast.success("Link Copied!");
   };
 
+  const handlePostNavigation = (e) => {
+    e.preventDefault();
+    const target = authUser ? `/post/${_id}` : "/login";
+    navigate(target);
+  };
+
+  const handleUserNavigation = (e) => {
+    e.preventDefault();
+    const isMyProfile = authUser?.username === user?.username;
+    const target = authUser
+      ? isMyProfile
+        ? `/myprofile`
+        : `/user/profile/${user?.username}`
+      : "/login";
+    navigate(target);
+  };
+
   return (
     <>
-      <div className="md:px-3 md:py-4 bg-bgBlue rounded">
-        <div className="px-2 py-2 flex gap-x-3 items-start">
+      <div className="my-3 md:px-3 md:py-3 bg-bgBlue rounded">
+        <div className="px-1 py-2 flex gap-x-2 items-start">
           {/* Profile Image Container */}
-          <div className="w-14 h-14 flex items-center justify-center">
-            {img ? (
+          <div
+            onClick={handleUserNavigation}
+            className="size-14 -mt-1 object-cover rounded-full cursor-pointer"
+          >
+            {user?.profileImg ? (
               <img
-                src={img}
-                className="w-14 h-14 object-cover rounded-full"
-                alt="user-profile"
+                src={user?.profileImg}
+                alt="user-pic"
+                className="size-full object-contain"
               />
             ) : (
-              <RxAvatar className="w-14 h-14 p-2" />
+              <RxAvatar className="size-full px-2" />
             )}
           </div>
 
           {/* User Details */}
-          <div>
-            <div className="py-1 flex items-center gap-2 text-gray-500">
-              <h2 className="text-lg text-black font-semibold">
-                {user?.fullName}
+          <div className="w-full">
+            <div className="py-1 flex items-center gap-1 text-gray-500">
+              <h2 className="pr-2 text-xl text-black font-semibold capitalize">
+                {user?.username}
               </h2>
-              <span className="font-medium">@user_id</span>
+              <div
+                onClick={handleUserNavigation}
+                className="font-medium cursor-pointer"
+              >
+                @{user?.username}
+              </div>
               <BsDot size={20} />
               <span>1y</span>
             </div>
 
-            <div className="py-2">
-              <p>{text}</p>
+            <div className="cursor-pointer" onClick={handlePostNavigation}>
+              <p className="px-1 py-2">{text}</p>
             </div>
 
             {/* Icons Row */}
@@ -105,13 +141,13 @@ const SinglePost = ({ post }) => {
                 {isLiked && !isLiking && (
                   <GoHeartFill color="#fb2c36" size={20} />
                 )}
-                <span>{likes.length}</span>
+                <span>{likes?.length}</span>
               </button>
-              {/* 
+
               <div className="flex items-center gap-1 cursor-pointer">
                 <FaRegComment size={18} />
-                <span>{comments.length}</span>
-              </div> */}
+                <span>{comments?.length}</span>
+              </div>
 
               <button
                 className="p-2 cursor-pointer hover:rounded-full hover:bg-gray-200"

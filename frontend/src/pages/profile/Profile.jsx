@@ -65,18 +65,24 @@ const Profile = () => {
                 <h3 className="text-lg font-semibold">0</h3>
                 <p className="text-gray-500 text-sm">Posts</p>
               </div>
-              <div>
+
+              <Link to="/followers">
                 <h3 className="text-lg font-semibold">
-                  {authUser?.following?.length}
-                </h3>
-                <p className="text-gray-500 text-sm">Following</p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold">
-                  {authUser?.followers.length}
+                  {authUser?.followers?.length
+                    ? authUser?.followers?.length
+                    : 0}
                 </h3>
                 <p className="text-gray-500 text-sm">Followers</p>
-              </div>
+              </Link>
+
+              <Link to="/following">
+                <h3 className="text-lg font-semibold">
+                  {authUser?.following?.length
+                    ? authUser?.following?.length
+                    : 0}
+                </h3>
+                <p className="text-gray-500 text-sm">Following</p>
+              </Link>
             </div>
 
             {/* Edit Profile Button */}

@@ -1,40 +1,35 @@
 import { RxAvatar } from "react-icons/rx";
 import Suggested from "../../components/Suggested";
-import { API_URL, useAppContext } from "../../context/AppContext";
-import { GoHeart } from "react-icons/go";
-import { BsDot } from "react-icons/bs";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { IoTrashOutline } from "react-icons/io5";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import { useAppContext } from "../../context/AppContext";
 import { useParams } from "react-router-dom";
+import { useGetUserPosts } from "../../hooks/useGetUserPosts";
+import { formatSinceDate } from "../../utils/formatDate";
+import SinglePost from "../post/SinglePost";
+import { useGetUserProfile } from "../../hooks/useGetUserProfile";
 
 const Profile = () => {
   const { authUser } = useAppContext();
-  console.log(authUser);
 
   const { username } = useParams();
+  // console.log("useParams", username);
 
-  const { data: user } = useQuery({
-    queryKey: ["userProfile"],
-    queryFn: async () => {
-      try {
-        const res = await axios.get(API_URL + `/users/profile/${username}`, {
-          withCredentials: true,
-        });
-        const data = await res.data;
-        return data;
-      } catch (error) {
-        console.log("Error in user profile", error);
-      }
-    },
-  });
+  const { data: user } = useGetUserProfile(username);
 
-  console.log("user", user);
+  const { data: userPosts } = useGetUserPosts(username);
 
   const handleEditProfile = () => {
     console.log("edit profile");
   };
+
+  //console.log("profile", user);
+  // console.log("userPosts", userPosts);
+  // console.log("authUser", authUser);
+
+  const isFollowed = authUser?.following.includes(user?._id);
+  // console.log("isFollowed", isFollowed);
+
+  const sinceFromDate = formatSinceDate(user?.createdAt);
+  // console.log("sinceFromDate", sinceFromDate);
 
   return (
     <>
@@ -73,22 +68,34 @@ const Profile = () => {
 
           {/* Profile Details */}
           <div className="text-center mt-5">
-            <h2 className="text-xl font-semibold">{user?.username}</h2>
+            <h2 className="text-3xl font-semibold capitalize">
+              {user?.username}
+            </h2>
+            <p className="text-gray-400 font-semibold">@{user?.username}</p>
             <p className="text-gray-500">{user?.bio}</p>
+            <div className="py-1 text-sm text-gray-400 text-center">
+              <span>{sinceFromDate}</span>
+            </div>
           </div>
 
           {/* Stats */}
           <div className="flex justify-center my-5 text-center gap-5">
             <div>
-              <h3 className="text-lg font-semibold">NA</h3>
+              <h3 className="text-lg font-semibold">
+                {userPosts?.length ? userPosts?.length : 0}
+              </h3>
               <p className="text-gray-500 text-sm">Posts</p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold">NA</h3>
+              <h3 className="text-lg font-semibold">
+                {user?.following?.length ? user?.following?.length : 0}
+              </h3>
               <p className="text-gray-500 text-sm">Following</p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold">NA</h3>
+              <h3 className="text-lg font-semibold">
+                {user?.followers?.length ? user?.followers?.length : 0}
+              </h3>
               <p className="text-gray-500 text-sm">Followers</p>
             </div>
           </div>
@@ -99,7 +106,7 @@ const Profile = () => {
               onClick={handleEditProfile}
               className="px-4 py-2 rounded-md bg-appColor text-white hover:opacity-80"
             >
-              Follow / Unfollow
+              {isFollowed ? "Unfollow" : "Follow"}
             </button>
           </div>
 
@@ -117,50 +124,11 @@ const Profile = () => {
             </h3>
 
             {/* Single Post */}
-
-            <div className="my-3 px-1 py-2 md:px-5 md:py-5 bg-bgBlue rounded">
-              <div className="flex gap-3 items-start">
-                <div>
-                  {/* User profile img  */}
-                  {user?.profileImg ? (
-                    <img
-                      src={user.profileImg}
-                      className="w-12 h-12 object-cover"
-                      alt="user-profile"
-                    />
-                  ) : (
-                    <RxAvatar className="p-1 size-12" />
-                  )}
-                </div>
-
-                {/*  user profile details */}
-                <div>
-                  <div className="py-1 flex items-center gap-1">
-                    <span className="text-xl font-medium">@user_id</span>
-                    <BsDot size={20} />
-                    <span className="text-gray-500">1y</span>
-                  </div>
-
-                  <div className="py-2">
-                    <p>text is here</p>
-                  </div>
-
-                  <div className="pt-2 flex items-center gap-5">
-                    <div className="flex items-center gap-1">
-                      <GoHeart size={18} />
-                      <span>1</span>
-                    </div>
-
-                    <div>
-                      <IoShareSocialOutline size={18} />
-                    </div>
-
-                    <div>
-                      <IoTrashOutline color="#ff6467" size={18} />
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <div className="pt-3">
+              {userPosts &&
+                userPosts.map((post) => (
+                  <SinglePost key={post._id} post={post} username={username} />
+                ))}
             </div>
           </div>
         </div>

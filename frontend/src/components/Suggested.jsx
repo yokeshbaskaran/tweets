@@ -50,16 +50,16 @@ export const UserSuggestions = ({ suggestedUsers, follow }) => {
             suggestedUsers.map((post) => (
               <div key={post._id} className="py-2">
                 <div className="flex items-start gap-2">
-                  <div>
+                  <div className="size-14 -mt-1 object-cover rounded-full">
                     {post?.profileImg ? (
                       <img
                         src={post.profileImg}
                         alt="user-profile"
-                        className="size-14"
+                        className="size-full object-contain"
                       />
                     ) : (
                       <>
-                        <RxAvatar size={40} color="#1d9bf0" />
+                        <RxAvatar className="size-full px-1" />
                       </>
                     )}
                   </div>
