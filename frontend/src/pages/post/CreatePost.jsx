@@ -93,7 +93,7 @@ const CreatePost = () => {
         <h3 className="px-1 text-lg font-semibold">Recent Posts</h3>
 
         {/* Single Post */}
-        <div className="pt-3 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+        <div className="pt-2 grid sm:grid-cols-2 md:grid-cols-3 md:gap-5">
           {recentPosts ? (
             recentPosts
               .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))

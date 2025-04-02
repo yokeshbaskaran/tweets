@@ -129,7 +129,7 @@ const SinglePost = ({ post }) => {
 
   return (
     <>
-      <div className="my-3 md:px-3 md:py-3 bg-bgBlue rounded">
+      <div className="my-2 md:px-3 md:py-3 bg-bgBlue rounded">
         <div className="px-1 py-2 flex gap-x-2 items-start">
           {/* Profile Image Container */}
           <Link
@@ -191,10 +191,10 @@ const SinglePost = ({ post }) => {
                 <span>{likes?.length}</span>
               </button>
 
-              <div className="flex items-center gap-1 cursor-pointer">
+              {/* <div className="flex items-center gap-1 cursor-pointer">
                 <FaRegComment size={18} />
                 <span>{comments?.length}</span>
-              </div>
+              </div> */}
 
               <button
                 className="p-2 cursor-pointer hover:rounded-full hover:bg-gray-200"

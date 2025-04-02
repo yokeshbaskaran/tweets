@@ -83,8 +83,9 @@ export default Notifications;
 
 export const SingleNotification = ({ notification }) => {
   const { authUser } = useAppContext();
+
   const isMyProfile = authUser?.username === notification?.from?.username;
-  console.log("notification", notification);
+  // console.log("notification", notification);
   return (
     <div>
       <div className="py-1 border-b border-gray-300">

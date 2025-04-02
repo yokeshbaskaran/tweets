@@ -167,14 +167,21 @@ const Navbar = () => {
               </Link>
 
               <div className="flex flex-col">
-                <span className="text-lg font-semibold capitalize">
+                <Link
+                  to="myprofile"
+                  className="text-lg font-semibold capitalize"
+                >
                   {authUser?.username}
-                </span>
-                <span className="text-gray-500">@{authUser?.username}</span>
+                </Link>
+                <Link to="myprofile" className="text-gray-500">
+                  @{authUser?.username}
+                </Link>
               </div>
             </div>
+
+            {/* Logout button  */}
             <button
-              className="w-full my-1 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
+              className="w-full my-2 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
               onClick={handleLogout}
             >
               <span className="text-lg font-semibold">Logout</span>
@@ -296,12 +303,14 @@ const Navbar = () => {
                   <span className="text-lg font-semibold capitalize">
                     {authUser?.username}
                   </span>
-                  <span className="text-gray-500">@{authUser?.username}</span>
+                  <Link to="myprofile" className="text-gray-500">
+                    @{authUser?.username}
+                  </Link>
                 </div>
               </div>
 
               <button
-                className="w-full my-1 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
+                className="w-full my-2 py-2 flex justify-center items-center gap-3 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
                 onClick={handleLogout}
               >
                 <span className="text-lg font-semibold">Logout</span>

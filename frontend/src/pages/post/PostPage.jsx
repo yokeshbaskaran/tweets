@@ -124,10 +124,10 @@ const PostPage = () => {
                   <span>{singlePost?.likes?.length}</span>
                 </button>
 
-                <div className="flex items-center gap-1 cursor-pointer">
+                {/* <div className="flex items-center gap-1 cursor-pointer">
                   <FaRegComment size={18} />
                   <span>{singlePost?.comments?.length}</span>
-                </div>
+                </div> */}
 
                 <button
                   className="p-2 cursor-pointer hover:rounded-full hover:bg-gray-200"
