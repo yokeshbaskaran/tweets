@@ -1,25 +1,9 @@
 import React from "react";
 import SinglePost from "./SinglePost";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { API_URL } from "../../context/AppContext";
+import { useGetAllPosts } from "../../hooks/useGetUserPosts";
 
 const AllPosts = () => {
-  const { data: posts } = useQuery({
-    queryKey: ["posts"],
-    queryFn: async () => {
-      // all-posts
-      try {
-        const res = await axios.get(API_URL + "/posts/all", {
-          withCredentials: true,
-        });
-        const data = res.data;
-        return data;
-      } catch (error) {
-        console.log("get posts", error);
-      }
-    },
-  });
+  const { data: posts } = useGetAllPosts();
 
   return (
     <div className="py-5 flex flex-col gap-3">

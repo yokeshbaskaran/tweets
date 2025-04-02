@@ -1,14 +1,14 @@
 import { RxAvatar } from "react-icons/rx";
 import Suggested from "../../components/Suggested";
 import { useAppContext } from "../../context/AppContext";
-import { Link } from "react-router-dom";
+import { Link, Links } from "react-router-dom";
 import { formatSinceDate } from "../../utils/formatDate";
 import { useGetUserPosts } from "../../hooks/useGetUserPosts";
 import SinglePost from "../post/SinglePost";
 
 const Profile = () => {
   const { authUser } = useAppContext();
-  console.log(authUser);
+  // console.log(authUser);
 
   const handleEditProfile = () => {
     console.log("edit profile");
@@ -18,7 +18,7 @@ const Profile = () => {
   // console.log("sinceFromDate", sinceFromDate);
 
   const { data: myPosts } = useGetUserPosts(authUser?.username);
-  console.log("myPosts", myPosts);
+  // console.log("myPosts", myPosts);
 
   return (
     <>
@@ -77,9 +77,9 @@ const Profile = () => {
             </div>
 
             {/* Stats */}
-            <div className="flex justify-center my-5 text-center gap-5">
+            <div className="flex justify-center mt-5 mb-8 text-center gap-5">
               <div>
-                <h3 className="text-lg font-semibold">0</h3>
+                <h3 className="text-lg font-semibold">{myPosts?.length}</h3>
                 <p className="text-gray-500 text-sm">Posts</p>
               </div>
 
@@ -115,14 +115,14 @@ const Profile = () => {
 
             {/* divider  */}
             <div className="relative">
-              <div className="absolute inset-0 px-2 flex items-center">
+              <div className="absolute inset-0 md:px-2 flex items-center">
                 <span className="w-full border-t border-gray-300"></span>
               </div>
             </div>
 
             {/* Posts Section */}
-            <div className="px-2 py-3">
-              <h3 className="text-lg font-semibold">Your Posts</h3>
+            <div className="md:px-3 py-3">
+              <h3 className="px-1 text-lg font-semibold">Your Posts</h3>
 
               {/* Single Post */}
 
@@ -130,15 +130,24 @@ const Profile = () => {
               <div className="pt-3">
                 {myPosts ? (
                   myPosts.map((post) => (
-                    <SinglePost
-                      key={post._id}
-                      post={post}
-                      username={authUser?.username}
-                    />
+                    <SinglePost key={post._id} post={post} />
                   ))
                 ) : (
                   <div className="py-10 text-gray-500 text-center">
                     <span>Loading Posts...</span>
+                  </div>
+                )}
+
+                {myPosts?.length === 0 && (
+                  <div className="pt-10 pb-5 flex flex-col justify-center items-center text-gray-500 text-center">
+                    <span>No Posts created</span>
+
+                    <Link
+                      to="/create"
+                      className="my-3 px-3 py-3 border text-appColor hover:text-white hover:bg-appColor rounded"
+                    >
+                      Click here to create!
+                    </Link>
                   </div>
                 )}
               </div>

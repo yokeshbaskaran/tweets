@@ -38,14 +38,13 @@ const Notifications = () => {
       }
     },
     onSuccess: () => {
-      toast.success("All Notifications deleted");
+      toast.error("all notifications Deleted");
       queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 
   const handleDeleteNotifications = () => {
     if (confirm("Are you sure want to delete allnotifications! ")) {
-      console.log("all notifications Deleted");
       deleteNotifications();
     }
   };
@@ -106,17 +105,6 @@ export const SingleNotification = ({ notification }) => {
                 <RxAvatar className="size-full px-2" />
               )}
             </div>
-            {/* {notification.from?.profileImg ? (
-              <img
-                src={notification.from?.profileImg}
-                alt="user-profile"
-                className="size-14"
-              />
-            ) : (
-              <>
-                <RxAvatar size={40} color="#1d9bf0" />
-              </>
-            )} */}
           </Link>
 
           <div className="flex items-center mr-auto gap-2">

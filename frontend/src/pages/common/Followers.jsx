@@ -3,6 +3,9 @@ import { RxAvatar } from "react-icons/rx";
 import { useAppContext } from "../../context/AppContext";
 import { useGetUserFollow } from "../../hooks/useGetUserProfile";
 import { IoArrowBackOutline } from "react-icons/io5";
+import useFollow from "../../hooks/useFollow";
+import toast from "react-hot-toast";
+import { RiUserUnfollowLine } from "react-icons/ri";
 
 const Followers = () => {
   const { authUser } = useAppContext();
@@ -13,7 +16,7 @@ const Followers = () => {
   // console.log("users", data.followers);
 
   const followers = data?.followers;
-  console.log(followers);
+  // console.log(followers);
 
   return (
     <div>
@@ -47,8 +50,14 @@ export default Followers;
 export const SingleFollower = ({ follower }) => {
   console.log("follower", follower);
 
+  const { follow } = useFollow();
+
   const handleRemoveUser = () => {
-    alert("Follower Removed");
+    follow(follower?._id);
+
+    toast(`Unfollowed ${follower?.username}`, {
+      icon: <RiUserUnfollowLine color="red" />,
+    });
   };
 
   return (

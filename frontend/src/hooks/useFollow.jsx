@@ -8,22 +8,29 @@ const useFollow = () => {
 
   const { mutate: follow, isPending } = useMutation({
     mutationFn: async (userId) => {
-      const response = await axios.post(
-        API_URL + `/users/follow/${userId}`,
-        {},
-        {
-          withCredentials: true,
-        }
-      );
+      // console.log("inside followfb", userId);
 
-      const data = response.data;
-      console.log(data);
-      return data;
+      try {
+        const response = await axios.post(
+          API_URL + `/users/follow/${userId}`,
+          {},
+          {
+            withCredentials: true,
+          }
+        );
+
+        const data = response.data;
+        return data;
+      } catch (error) {
+        console.log("Error in useFollow", error);
+      }
     },
     onSuccess: () => {
       Promise.all([
         queryClient.invalidateQueries({ queryKey: ["suggestedUsers"] }),
         queryClient.invalidateQueries({ queryKey: ["authUser"] }),
+        queryClient.invalidateQueries({ queryKey: ["userFollow"] }),
+        queryClient.invalidateQueries({ queryKey: ["userProfile"] }),
       ]);
     },
     onError: (error) => {

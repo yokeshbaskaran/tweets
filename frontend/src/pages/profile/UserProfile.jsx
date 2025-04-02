@@ -6,6 +6,9 @@ import { useGetUserPosts } from "../../hooks/useGetUserPosts";
 import { formatSinceDate } from "../../utils/formatDate";
 import SinglePost from "../post/SinglePost";
 import { useGetUserProfile } from "../../hooks/useGetUserProfile";
+import useFollow from "../../hooks/useFollow";
+import toast from "react-hot-toast";
+import { FaRegUser } from "react-icons/fa";
 
 const Profile = () => {
   const { authUser } = useAppContext();
@@ -16,17 +19,26 @@ const Profile = () => {
   const { data: user } = useGetUserProfile(username);
 
   const { data: userPosts } = useGetUserPosts(username);
+  const { follow } = useFollow();
 
-  const handleEditProfile = () => {
-    console.log("edit profile");
+  const isFollowed = authUser?.following.includes(user?._id);
+  // console.log("isFollowed", isFollowed);
+
+  const handleFollow = () => {
+    isFollowed
+      ? toast(`you unfollowed ${user?.username}`, {
+          icon: <FaRegUser color="red" />,
+        })
+      : toast(`you followed ${user?.username}`, {
+          icon: <FaRegUser color="green" />,
+        });
+    // console.log("user-id:", authUser._id, user._id);
+    follow(user._id);
   };
 
   //console.log("profile", user);
   // console.log("userPosts", userPosts);
   // console.log("authUser", authUser);
-
-  const isFollowed = authUser?.following.includes(user?._id);
-  // console.log("isFollowed", isFollowed);
 
   const sinceFromDate = formatSinceDate(user?.createdAt);
   // console.log("sinceFromDate", sinceFromDate);
@@ -86,24 +98,26 @@ const Profile = () => {
               </h3>
               <p className="text-gray-500 text-sm">Posts</p>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold">
-                {user?.following?.length ? user?.following?.length : 0}
-              </h3>
-              <p className="text-gray-500 text-sm">Following</p>
-            </div>
+
             <div>
               <h3 className="text-lg font-semibold">
                 {user?.followers?.length ? user?.followers?.length : 0}
               </h3>
               <p className="text-gray-500 text-sm">Followers</p>
             </div>
+
+            <div>
+              <h3 className="text-lg font-semibold">
+                {user?.following?.length ? user?.following?.length : 0}
+              </h3>
+              <p className="text-gray-500 text-sm">Following</p>
+            </div>
           </div>
 
-          {/* Edit Profile Button */}
+          {/* Follow Button */}
           <div className="text-center mb-8">
             <button
-              onClick={handleEditProfile}
+              onClick={handleFollow}
               className="px-4 py-2 rounded-md bg-appColor text-white hover:opacity-80"
             >
               {isFollowed ? "Unfollow" : "Follow"}
@@ -127,7 +141,7 @@ const Profile = () => {
             <div className="pt-3">
               {userPosts ? (
                 userPosts.map((post) => (
-                  <SinglePost key={post._id} post={post} username={username} />
+                  <SinglePost key={post._id} post={post} />
                 ))
               ) : (
                 <div className="py-10 text-gray-500 text-center">

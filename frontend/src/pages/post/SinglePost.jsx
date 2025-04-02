@@ -4,23 +4,29 @@ import { RxAvatar } from "react-icons/rx";
 import { BsDot } from "react-icons/bs";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
-import { IoShareSocialOutline } from "react-icons/io5";
+import { IoShareSocialOutline, IoTrashOutline } from "react-icons/io5";
 import { FaRegComment } from "react-icons/fa";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { API_URL, useAppContext } from "../../context/AppContext";
 import { Link, useNavigate } from "react-router-dom";
+import { IoHeart } from "react-icons/io5";
+import { formatPostDate } from "../../utils/formatDate";
 
-const SinglePost = ({ post, username }) => {
-  const { _id, text, img, likes, comments, user } = post;
+const SinglePost = ({ post }) => {
+  const { _id, text, img, likes, comments, user, createdAt } = post;
   // console.log("post", post);
 
-  const usernameFromParent = username || "";
   const { authUser } = useAppContext();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const postUsername = user?.username;
 
   const isLiked = likes?.includes(authUser?._id);
+  const formatDate = formatPostDate(createdAt);
+  // console.log("formatDate", formatDate);
+
+  const isMyProfile = authUser?.username === user?.username;
 
   const { mutate: likePost, isPending: isLiking } = useMutation({
     mutationFn: async () => {
@@ -52,7 +58,7 @@ const SinglePost = ({ post, username }) => {
       });
 
       // Update profile page posts
-      queryClient.setQueryData(["userAllPosts", usernameFromParent], (old) => {
+      queryClient.setQueryData(["userAllPosts", postUsername], (old) => {
         return old?.map((post) =>
           post._id === _id ? { ...post, likes: updatedLikes } : post
         );
@@ -63,6 +69,13 @@ const SinglePost = ({ post, username }) => {
   const handleLikePost = (e) => {
     e.preventDefault();
     if (isLiking) return;
+    isLiked
+      ? toast(`Post unliked`, {
+          icon: <IoHeart color="red" />,
+        })
+      : toast(`Post liked`, {
+          icon: <IoHeart color="#1d9bf0" />,
+        });
     likePost();
   };
 
@@ -78,9 +91,34 @@ const SinglePost = ({ post, username }) => {
     navigate(target);
   };
 
+  const handleDeleteOnePost = async (id) => {
+    try {
+      const res = await axios.delete(API_URL + `/posts/${id}`, {
+        withCredentials: true,
+      });
+      const data = res.data;
+      return data;
+    } catch (error) {
+      console.log("Deletepost:", error);
+    }
+  };
+
+  const { mutate: deletePost } = useMutation({
+    mutationFn: handleDeleteOnePost,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["userAllPosts"] });
+      toast.error("Post deleted");
+    },
+  });
+
+  const handleDeletePost = (e) => {
+    e.preventDefault();
+    deletePost(_id);
+  };
+
   const handleUserNavigation = (e) => {
     e.preventDefault();
-    const isMyProfile = authUser?.username === user?.username;
     const target = authUser
       ? isMyProfile
         ? `/myprofile`
@@ -94,7 +132,7 @@ const SinglePost = ({ post, username }) => {
       <div className="my-3 md:px-3 md:py-3 bg-bgBlue rounded">
         <div className="px-1 py-2 flex gap-x-2 items-start">
           {/* Profile Image Container */}
-          <div
+          <Link
             onClick={handleUserNavigation}
             className="size-14 -mt-1 object-cover rounded-full cursor-pointer"
           >
@@ -107,7 +145,7 @@ const SinglePost = ({ post, username }) => {
             ) : (
               <RxAvatar className="size-full px-2" />
             )}
-          </div>
+          </Link>
 
           {/* User Details */}
           <div className="w-full">
@@ -115,14 +153,23 @@ const SinglePost = ({ post, username }) => {
               <h2 className="pr-2 text-xl text-black font-semibold capitalize">
                 {user?.username}
               </h2>
-              <div
+              <Link
                 onClick={handleUserNavigation}
                 className="font-medium cursor-pointer"
               >
                 @{user?.username}
-              </div>
+              </Link>
               <BsDot size={20} />
-              <span>1y</span>
+              <span className="text-sm">{formatDate}</span>
+
+              {isMyProfile && (
+                <button
+                  onClick={handleDeletePost}
+                  className="px-3 py-2 ml-auto hover:bg-gray-200 rounded-full"
+                >
+                  <IoTrashOutline color="red" />
+                </button>
+              )}
             </div>
 
             <div className="cursor-pointer" onClick={handlePostNavigation}>

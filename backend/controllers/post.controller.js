@@ -41,9 +41,25 @@ const createPost = async (req, res) => {
   }
 };
 
+const getSinglePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    // console.log("post-id", id);
+
+    const post = await Post.findById(id).populate("user", "-password");
+    if (!post) return res.status(404).json({ message: "Post not found" });
+
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(500).json({ error: "Internal server error" });
+    console.log("Error in createPost controller: ", error);
+  }
+};
+
 const deletePost = async (req, res) => {
   try {
-    const post = await Post.findById(req.params.id);
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
@@ -54,10 +70,10 @@ const deletePost = async (req, res) => {
         .json({ error: "You are not authorized to delete this post" });
     }
 
-    if (post.img) {
-      const imgId = post.img.split("/").pop().split(".")[0];
-      await cloudinary.uploader.destroy(imgId);
-    }
+    // if (post.img) {
+    //   const imgId = post.img.split("/").pop().split(".")[0];
+    //   await cloudinary.uploader.destroy(imgId);
+    // }
 
     await Post.findByIdAndDelete(req.params.id);
 
@@ -206,7 +222,7 @@ const getAllPosts = async (req, res) => {
   }
 };
 
-const getLikedPosts = async (req, res) => {
+const getMyLikedPosts = async (req, res) => {
   const userId = req.params.id;
 
   try {
@@ -256,6 +272,7 @@ const getFollowingPosts = async (req, res) => {
   }
 };
 
+//gets userpost by username
 const getUserPosts = async (req, res) => {
   try {
     const { username } = req.params;
@@ -283,12 +300,14 @@ const getUserPosts = async (req, res) => {
 };
 
 module.exports = {
+  getSinglePost,
   createPost,
   deletePost,
   commentOnPost,
   likeUnlikePost,
   getAllPosts,
-  getLikedPosts,
-  getFollowingPosts,
   getUserPosts,
+
+  getMyLikedPosts,
+  getFollowingPosts,
 };

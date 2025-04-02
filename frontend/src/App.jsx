@@ -9,7 +9,7 @@ import Homepage from "./pages/home/Homepage";
 import Profile from "./pages/profile/Profile";
 import Followers from "./pages/common/Followers";
 import Following from "./pages/common/Following";
-import CreatePost from "./pages/common/CreatePost";
+import CreatePost from "./pages/post/CreatePost";
 import Search from "./pages/common/Search";
 import Notifications from "./pages/common/Notifications";
 import UserProfile from "./pages/profile/UserProfile";

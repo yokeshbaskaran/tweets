@@ -27,8 +27,8 @@ const EditMyProfile = () => {
       username: authUser?.username,
       fullName: "",
       email: authUser?.email,
-      //   password: authUser?.email,
-      //   confirmPassword: authUser?.email,
+      password: "",
+      confirmPassword: "",
       bio: authUser?.bio,
       socialLinks: "",
       profileImage: null,
@@ -160,7 +160,7 @@ const EditMyProfile = () => {
             Cancel
           </button>
 
-          <button className="px-4 py-2 bg-blue-500 hover:opacity-80 text-white rounded">
+          <button className="px-4 py-2 bg-appColor hover:opacity-80 text-white rounded">
             Update
           </button>
         </div>

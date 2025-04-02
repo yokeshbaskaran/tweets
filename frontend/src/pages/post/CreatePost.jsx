@@ -1,14 +1,18 @@
 import { RxAvatar } from "react-icons/rx";
 import { API_URL, useAppContext } from "../../context/AppContext";
 import toast from "react-hot-toast";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import axios from "axios";
+import { useGetAllPosts } from "../../hooks/useGetUserPosts";
+import { Link } from "react-router-dom";
+import SinglePost from "./SinglePost";
 
 const CreatePost = () => {
   const [text, setText] = useState("");
   // const [img, setImg] = useState(null);
   const { authUser } = useAppContext();
+  const queryClient = useQueryClient();
 
   const { mutate: createPost, isPending } = useMutation({
     mutationFn: async ({ text }) => {
@@ -31,6 +35,7 @@ const CreatePost = () => {
     onSuccess: () => {
       setText("");
       toast.success("Post created successfully!");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
 
@@ -39,11 +44,14 @@ const CreatePost = () => {
     createPost({ text });
   };
 
+  const { data: recentPosts } = useGetAllPosts(authUser?.username);
+  // console.log("recentPosts", recentPosts);
+
   return (
-    <section className="">
+    <section>
       <h2 className="text-2xl font-semibold">Create Post</h2>
 
-      <div className="my-2 px-2 py-4 bg-gray-50 rounded flex flex-col">
+      <div className="my-2 px-2 py-4 rounded flex flex-col">
         <div className="flex items-start gap-2">
           <div className="max-md">
             {authUser?.profileImg ? (
@@ -71,6 +79,51 @@ const CreatePost = () => {
         >
           {isPending ? "Posting" : "Post"}
         </button>
+      </div>
+
+      {/* divider  */}
+      <div className="relative">
+        <div className="absolute inset-0 md:px-2 flex items-center">
+          <span className="w-full border-t border-gray-300"></span>
+        </div>
+      </div>
+
+      {/* Posts Section */}
+      <div className="md:px-3 px-1 py-3">
+        <h3 className="px-1 text-lg font-semibold">Recent Posts</h3>
+
+        {/* Single Post */}
+        <div className="pt-3 grid sm:grid-cols-2 md:grid-cols-3 gap-5">
+          {recentPosts ? (
+            recentPosts
+              .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+              .slice(0, 8)
+              .map((post) => (
+                <SinglePost
+                  key={post._id}
+                  post={post}
+                  username={authUser?.username}
+                />
+              ))
+          ) : (
+            <div className="py-10 text-gray-500 text-center">
+              <span>Loading Posts...</span>
+            </div>
+          )}
+
+          {recentPosts?.length === 0 && (
+            <div className="pt-10 pb-5 flex flex-col justify-center items-center text-gray-500 text-center">
+              <span>No Posts created</span>
+
+              <Link
+                to="/create"
+                className="my-3 px-3 py-3 border text-appColor hover:text-white hover:bg-appColor rounded"
+              >
+                Click here to create!
+              </Link>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

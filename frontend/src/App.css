@@ -1,4 +1,8 @@
+/* Outfit font  */
 @import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+/* Inter font  */
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 @import "tailwindcss";
 
 * {
@@ -6,9 +10,29 @@
   resize: none;
 }
 
+/* Hide scrollbar for Chrome, Safari, and Edge */
+::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
+}
+
+/* Hide scrollbar for Internet Explorer */
+body {
+  -ms-overflow-style: none;
+}
+
 @theme {
   --color-appColor: #1d9bf0;
   --color-bgBlue: hsl(210 40% 96.1%);
+  --font-interFamily: "Inter", sans-serif;
+}
+
+.inter-font {
+  font-family: var(--font-interFamily);
 }
 
 @keyframes slideIn {

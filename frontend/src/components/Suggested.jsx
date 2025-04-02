@@ -4,6 +4,7 @@ import { API_URL } from "../context/AppContext";
 import { RxAvatar } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import useFollow from "../hooks/useFollow";
+import toast from "react-hot-toast";
 
 const Suggested = () => {
   const { data: suggestedUsers } = useQuery({
@@ -41,6 +42,11 @@ const Suggested = () => {
 export default Suggested;
 
 export const UserSuggestions = ({ suggestedUsers, follow }) => {
+  const handleFollow = (id, name) => {
+    follow(id);
+    toast.success(`you followed ${name}`);
+  };
+
   return (
     <div className="px-2">
       <div>
@@ -77,7 +83,7 @@ export const UserSuggestions = ({ suggestedUsers, follow }) => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      follow(post._id);
+                      handleFollow(post._id, post.username);
                     }}
                     className="ml-auto self-center capitalize m-1 px-3 py-1 rounded-4xl bg-appColor text-white hover:scale-105 transition-transform cursor-pointer"
                   >

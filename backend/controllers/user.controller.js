@@ -43,8 +43,9 @@ const followUnFollowUser = async (req, res) => {
 
     const userToModify = await User.findById(id);
     const currentUser = await User.findById(userId);
+    console.log("users", userToModify, currentUser);
 
-    if (id === userId)
+    if (id.toString() === userId.toString())
       return res
         .status(404)
         .json({ message: "you can't follow/unfollow yourself" });
@@ -58,9 +59,12 @@ const followUnFollowUser = async (req, res) => {
       //unfollow user
       await User.findByIdAndUpdate(id, { $pull: { followers: userId } });
 
-      await User.findByIdAndUpdate(userId, { $pull: { followers: id } });
+      await User.findByIdAndUpdate(userId, { $pull: { following: id } });
 
-      res.status(200).json({ message: "user unfollowed successfully" });
+      const text = `you ${currentUser.username} unfollowed the follower-${userToModify.username}`;
+
+      res.status(200).json({ text });
+      // res.status(200).json({ message: "user unfollowed successfully" });
     } else {
       //follow user
       await User.findByIdAndUpdate(id, { $push: { followers: userId } });
@@ -75,7 +79,10 @@ const followUnFollowUser = async (req, res) => {
       });
 
       await newNotify.save();
-      res.status(200).json({ message: "user followed successfully" });
+      const text = `you ${currentUser.username} followed the follower-${userToModify.username}`;
+
+      res.status(200).json({ text });
+      // res.status(200).json({ message: "user followed successfully" });
     }
   } catch (error) {
     console.log("Error in followUnFollowUser", error.message);
