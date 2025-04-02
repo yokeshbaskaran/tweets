@@ -1,11 +1,10 @@
 import { RxAvatar } from "react-icons/rx";
 import Suggested from "../../components/Suggested";
 import { useAppContext } from "../../context/AppContext";
-import { GoHeart } from "react-icons/go";
-import { BsDot } from "react-icons/bs";
-import { IoShareSocialOutline } from "react-icons/io5";
-import { IoTrashOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { formatSinceDate } from "../../utils/formatDate";
+import { useGetUserPosts } from "../../hooks/useGetUserPosts";
+import SinglePost from "../post/SinglePost";
 
 const Profile = () => {
   const { authUser } = useAppContext();
@@ -14,6 +13,12 @@ const Profile = () => {
   const handleEditProfile = () => {
     console.log("edit profile");
   };
+
+  const sinceFromDate = formatSinceDate(authUser?.createdAt);
+  // console.log("sinceFromDate", sinceFromDate);
+
+  const { data: myPosts } = useGetUserPosts(authUser?.username);
+  console.log("myPosts", myPosts);
 
   return (
     <>
@@ -55,8 +60,20 @@ const Profile = () => {
 
             {/* Profile Details */}
             <div className="text-center mt-5">
-              <h2 className="text-xl font-semibold">{authUser?.username}</h2>
-              <p className="text-gray-500">{authUser?.bio}</p>
+              <h2 className="text-3xl font-semibold capitalize">
+                {authUser?.username}
+              </h2>
+              <p className="text-gray-400 font-semibold">
+                @{authUser?.username}
+              </p>
+              {authUser?.bio && (
+                <p className="py-1 text-sm text-gray-500">
+                  Bio: {authUser?.bio}
+                </p>
+              )}
+              <div className="py-1 text-sm text-gray-400 text-center">
+                <span>{sinceFromDate}</span>
+              </div>
             </div>
 
             {/* Stats */}
@@ -109,49 +126,21 @@ const Profile = () => {
 
               {/* Single Post */}
 
-              <div className="my-3 px-1 py-2 md:px-5 md:py-5 bg-bgBlue rounded">
-                <div className="flex gap-3 items-start">
-                  <div>
-                    {/* User profile img  */}
-                    {authUser?.profileImg ? (
-                      <img
-                        src={authUser.profileImg}
-                        className="w-12 h-12 object-cover"
-                        alt="user-profile"
-                      />
-                    ) : (
-                      <RxAvatar className="p-1 size-12" />
-                    )}
+              {/* Single Post */}
+              <div className="pt-3">
+                {myPosts ? (
+                  myPosts.map((post) => (
+                    <SinglePost
+                      key={post._id}
+                      post={post}
+                      username={authUser?.username}
+                    />
+                  ))
+                ) : (
+                  <div className="py-10 text-gray-500 text-center">
+                    <span>Loading Posts...</span>
                   </div>
-
-                  {/*  user profile details */}
-                  <div>
-                    <div className="py-1 flex items-center gap-1">
-                      <span className="text-xl font-medium">@user_id</span>
-                      <BsDot size={20} />
-                      <span className="text-gray-500">1y</span>
-                    </div>
-
-                    <div className="py-2">
-                      <p>text is here</p>
-                    </div>
-
-                    <div className="pt-2 flex items-center gap-5">
-                      <div className="flex items-center gap-1">
-                        <GoHeart size={18} />
-                        <span>1</span>
-                      </div>
-
-                      <div>
-                        <IoShareSocialOutline size={18} />
-                      </div>
-
-                      <div>
-                        <IoTrashOutline color="#ff6467" size={18} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
           </div>

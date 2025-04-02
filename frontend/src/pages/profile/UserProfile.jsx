@@ -125,10 +125,15 @@ const Profile = () => {
 
             {/* Single Post */}
             <div className="pt-3">
-              {userPosts &&
+              {userPosts ? (
                 userPosts.map((post) => (
                   <SinglePost key={post._id} post={post} username={username} />
-                ))}
+                ))
+              ) : (
+                <div className="py-10 text-gray-500 text-center">
+                  <span>Loading Posts...</span>
+                </div>
+              )}
             </div>
           </div>
         </div>

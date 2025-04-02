@@ -90,7 +90,10 @@ export const SingleNotification = ({ notification }) => {
     <div>
       <div className="py-1 border-b border-gray-300">
         <div className="flex justify-between items-center gap-2 py-2">
-          <Link to={`/user/profile/${notification.from.username}`}>
+          <Link
+            className="max-md:hidden"
+            to={`/user/profile/${notification.from.username}`}
+          >
             {/* Profile Image Container */}
             <div className="size-14 object-cover rounded-full">
               {notification.from?.profileImg ? (
