@@ -26,9 +26,7 @@ const Suggested = () => {
   const { follow, isPending } = useFollow();
 
   return (
-    <div className="max-md:hidden w-[250px] px-1 py-2">
-      <h2 className="px-2 py-3 text-lg text-appColor">Suggested Users</h2>
-
+    <div>
       {/* Suggested All Users  */}
       <div>
         {suggestedUsers?.length > 0 && (
@@ -63,6 +61,8 @@ export const UserSuggestions = ({ suggestedUsers, follow }) => {
     <>
       {/* Single Suggested user */}
       <div className="px-2">
+        <h2 className="px-2 py-3 text-lg text-appColor">Suggested Users</h2>
+
         <div>
           {suggestedUsers &&
             suggestedUsers.map((post) => (

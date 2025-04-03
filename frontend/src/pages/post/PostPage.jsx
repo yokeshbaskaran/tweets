@@ -10,6 +10,7 @@ import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
 import { IoShareSocialOutline, IoTrashOutline } from "react-icons/io5";
 import { FaRegComment } from "react-icons/fa";
+import toast from "react-hot-toast";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -33,6 +34,17 @@ const PostPage = () => {
       }
     },
   });
+
+  const handleCopy = (text) => {
+    const splitText = API_URL.split("/").splice(0, 3).join("/");
+    // console.log("split-text:", splitText);
+
+    const copyLink = splitText + `/post/${text}`;
+    console.log("copy", copyLink);
+    navigator.clipboard.writeText(copyLink);
+    toast.success("Link Copied!");
+  };
+
   const isLiked = singlePost?.likes?.includes(authUser?._id);
   const formatDate = formatPostDate(singlePost?.createdAt);
   // console.log("formatDate", formatDate);
@@ -131,7 +143,7 @@ const PostPage = () => {
 
                 <button
                   className="p-2 cursor-pointer hover:rounded-full hover:bg-gray-200"
-                  // onClick={() => handleCopy(_id)}
+                  onClick={() => handleCopy(singlePost?._id)}
                 >
                   <IoShareSocialOutline size={18} />
                 </button>

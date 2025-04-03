@@ -27,7 +27,8 @@ body {
 
 @theme {
   --color-appColor: #1d9bf0;
-  --color-bgBlue: hsl(210 40% 96.1%);
+  --color-bgBlue: hsl(210 50% 97.1%);
+  /* --color-bgBlue: hsl(210 40% 96.1%); */
   --font-interFamily: "Inter", sans-serif;
 }
 

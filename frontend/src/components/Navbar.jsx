@@ -45,6 +45,7 @@ const Navbar = () => {
     if (confirm("Are you sure want to logout!")) {
       mutate();
       console.log("User is Loggedout");
+      location.reload();
     }
   };
 

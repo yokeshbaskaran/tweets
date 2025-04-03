@@ -7,7 +7,7 @@ const AllPosts = () => {
   const { data: posts, isLoading } = useGetAllPosts();
 
   return (
-    <div className="py-5 flex flex-col gap-3">
+    <div className="py-5 flex flex-col gap-1">
       {/* Individual Posts  */}
 
       {posts?.map((post) => (
