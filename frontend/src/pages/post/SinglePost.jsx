@@ -68,15 +68,42 @@ const SinglePost = ({ post }) => {
 
   const handleLikePost = (e) => {
     e.preventDefault();
+
+    if (!authUser) {
+      navigate("/login");
+      return;
+    }
+
     if (isLiking) return;
-    isLiked
-      ? toast(`Post unliked`, {
-          icon: <IoHeart color="red" />,
-        })
-      : toast(`Post liked`, {
-          icon: <IoHeart color="#1d9bf0" />,
-        });
     likePost();
+
+    //update UI
+    queryClient.setQueryData(["posts"], (oldPosts) => {
+      return oldPosts?.map((post) =>
+        post._id === _id
+          ? {
+              ...post,
+              likes: isLiked
+                ? post.likes.filter((id) => id !== authUser._id)
+                : [...post.likes, authUser._id],
+            }
+          : post
+      );
+    });
+
+    toast(isLiked ? "Post unliked" : "Post liked", {
+      icon: <IoHeart color={isLiked ? "red" : "#1d9bf0"} />,
+    });
+
+    // if (isMyProfile) {
+    //   isLiked
+    //     ? toast(`Post unliked`, {
+    //         icon: <IoHeart color="red" />,
+    //       })
+    //     : toast(`Post liked`, {
+    //         icon: <IoHeart color="#1d9bf0" />,
+    //       });
+    // }
   };
 
   const handleCopy = (text) => {
@@ -130,10 +157,16 @@ const SinglePost = ({ post }) => {
   return (
     <>
       <>
-        <div className="my-2 md:px-3 md:py-3 bg-bgBlue rounded">
+        <Link
+          to={`${isMyProfile ? `/post/${_id}` : `/login`}`}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+          className="yoki my-2 md:px-3 md:py-3 bg-bgBlue rounded"
+        >
           <div className="px-1 py-2 flex gap-x-2 items-start">
             {/* Profile Image Container */}
-            <Link
+            <div
               onClick={handleUserNavigation}
               className="size-14 -mt-1 object-cover rounded-full cursor-pointer"
             >
@@ -146,7 +179,7 @@ const SinglePost = ({ post }) => {
               ) : (
                 <RxAvatar className="size-full px-2" />
               )}
-            </Link>
+            </div>
 
             {/* User Details */}
             <div className="w-full">
@@ -154,12 +187,12 @@ const SinglePost = ({ post }) => {
                 <h2 className="pr-2 text-xl text-black font-semibold capitalize">
                   {user?.username}
                 </h2>
-                <Link
+                <div
                   onClick={handleUserNavigation}
                   className="font-medium cursor-pointer"
                 >
                   @{user?.username}
-                </Link>
+                </div>
                 <BsDot size={20} />
                 <span className="text-sm">{formatDate}</span>
 
@@ -184,7 +217,11 @@ const SinglePost = ({ post }) => {
                   className="flex items-center gap-1 cursor-pointer"
                 >
                   {!isLiked && !isLiking && (
-                    <GoHeart size={20} className="hover:text-red-500" />
+                    <GoHeart
+                      size={20}
+                      // onClick={handlePostNavigation}
+                      className="hover:text-red-500"
+                    />
                   )}
                   {isLiked && !isLiking && (
                     <GoHeartFill color="#fb2c36" size={20} />
@@ -206,7 +243,7 @@ const SinglePost = ({ post }) => {
               </div>
             </div>
           </div>
-        </div>
+        </Link>
       </>
     </>
   );
