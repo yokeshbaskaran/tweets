@@ -6,6 +6,7 @@ import { formatSinceDate } from "../../utils/formatDate";
 import { useGetUserPosts } from "../../hooks/useGetUserPosts";
 import SinglePost from "../post/SinglePost";
 import MyProfile from "../../components/skeleton/MyProfile";
+import Post from "../../components/skeleton/Post";
 
 const Profile = () => {
   const { authUser, isLoading } = useAppContext();
@@ -127,17 +128,20 @@ const Profile = () => {
                 <h3 className="px-1 text-lg font-semibold">Your Posts</h3>
 
                 {/* Single Post */}
-
-                {/* Single Post */}
-                <div className="pt-3">
+                <div className="mt-3">
                   {myPosts ? (
                     myPosts.map((post) => (
                       <SinglePost key={post._id} post={post} />
                     ))
                   ) : (
-                    <div className="py-10 text-gray-500 text-center">
-                      <span>Loading Posts...</span>
-                    </div>
+                    <>
+                      {/* Single Post skeleton */}
+                      <div className="my-3">
+                        {[...Array(2)].map((_, i) => (
+                          <Post key={i} />
+                        ))}
+                      </div>
+                    </>
                   )}
 
                   {myPosts?.length === 0 && (
