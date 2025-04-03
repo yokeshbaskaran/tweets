@@ -5,7 +5,7 @@ Deploying MERN Stack in Render.com
 ### step-1: server.js (file)
 
 // --------------------Deployment---------------
-
+const path = require("path"); // add the path
 app.use(express.static(path.join(\_\_dirname, "..", "frontend", "dist")));
 
 app.get("\*", (req, res) => {

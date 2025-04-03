@@ -43,6 +43,7 @@ app.use("/api/notifications", notificationRoutes);
 
 // --------------------Deployment---------------
 
+const path = require("path");
 app.use(express.static(path.join(__dirname, "..", "frontend", "dist")));
 
 app.get("*", (req, res) => {
