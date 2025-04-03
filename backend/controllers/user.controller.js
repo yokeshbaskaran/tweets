@@ -43,7 +43,7 @@ const followUnFollowUser = async (req, res) => {
 
     const userToModify = await User.findById(id);
     const currentUser = await User.findById(userId);
-    console.log("users", userToModify, currentUser);
+    // console.log("users", userToModify, currentUser);
 
     if (id.toString() === userId.toString())
       return res

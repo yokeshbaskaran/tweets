@@ -6,7 +6,7 @@ const cloudinary = require("cloudinary").v2;
 const createPost = async (req, res) => {
   try {
     const { text } = req.body;
-    console.log("text", text);
+    // console.log("text", text);
 
     // let { img } = req.body;
     const userId = req.user._id.toString();
