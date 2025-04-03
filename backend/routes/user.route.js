@@ -4,6 +4,8 @@ const router = express.Router();
 const {
   getUserProfile,
   getUserFollow,
+  removeFollower,
+
   getSuggestedUsers,
   followUnFollowUser,
   updateUser,
@@ -13,6 +15,8 @@ const protectRoute = require("../middleware/protectedRoute");
 router.get("/profile/:username", protectRoute, getUserProfile);
 router.get("/follow", protectRoute, getUserFollow);
 router.get("/suggested", protectRoute, getSuggestedUsers);
+
+router.delete("/remove/:id", protectRoute, removeFollower);
 router.post("/follow/:id", protectRoute, followUnFollowUser);
 router.post("/update", protectRoute, updateUser);
 

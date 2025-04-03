@@ -1,20 +1,25 @@
 import React from "react";
 import SinglePost from "./SinglePost";
 import { useGetAllPosts } from "../../hooks/useGetUserPosts";
+import Post from "../../components/skeleton/Post";
 
 const AllPosts = () => {
-  const { data: posts } = useGetAllPosts();
+  const { data: posts, isLoading } = useGetAllPosts();
 
   return (
     <div className="py-5 flex flex-col gap-3">
       {/* Individual Posts  */}
 
-      {posts ? (
-        posts.map((post) => <SinglePost key={post._id} post={post} />)
-      ) : (
-        <div className="py-5 text-lg text-left text-gray-400">
-          Loading posts
-        </div>
+      {posts?.map((post) => (
+        <SinglePost key={post._id} post={post} />
+      ))}
+
+      {isLoading && (
+        <>
+          {[...Array(5)].map((_, i) => (
+            <Post key={i} />
+          ))}
+        </>
       )}
 
       {posts?.length === 0 && (

@@ -129,83 +129,85 @@ const SinglePost = ({ post }) => {
 
   return (
     <>
-      <div className="my-2 md:px-3 md:py-3 bg-bgBlue rounded">
-        <div className="px-1 py-2 flex gap-x-2 items-start">
-          {/* Profile Image Container */}
-          <Link
-            onClick={handleUserNavigation}
-            className="size-14 -mt-1 object-cover rounded-full cursor-pointer"
-          >
-            {user?.profileImg ? (
-              <img
-                src={user?.profileImg}
-                alt="user-pic"
-                className="size-full object-contain"
-              />
-            ) : (
-              <RxAvatar className="size-full px-2" />
-            )}
-          </Link>
-
-          {/* User Details */}
-          <div className="w-full">
-            <div className="py-1 flex items-center gap-1 text-gray-500">
-              <h2 className="pr-2 text-xl text-black font-semibold capitalize">
-                {user?.username}
-              </h2>
-              <Link
-                onClick={handleUserNavigation}
-                className="font-medium cursor-pointer"
-              >
-                @{user?.username}
-              </Link>
-              <BsDot size={20} />
-              <span className="text-sm">{formatDate}</span>
-
-              {isMyProfile && (
-                <button
-                  onClick={handleDeletePost}
-                  className="px-3 py-2 ml-auto hover:bg-gray-200 rounded-full"
-                >
-                  <IoTrashOutline color="red" />
-                </button>
+      <>
+        <div className="my-2 md:px-3 md:py-3 bg-bgBlue rounded">
+          <div className="px-1 py-2 flex gap-x-2 items-start">
+            {/* Profile Image Container */}
+            <Link
+              onClick={handleUserNavigation}
+              className="size-14 -mt-1 object-cover rounded-full cursor-pointer"
+            >
+              {user?.profileImg ? (
+                <img
+                  src={user?.profileImg}
+                  alt="user-pic"
+                  className="size-full object-contain"
+                />
+              ) : (
+                <RxAvatar className="size-full px-2" />
               )}
-            </div>
+            </Link>
 
-            <div className="cursor-pointer" onClick={handlePostNavigation}>
-              <p className="px-1 py-2">{text}</p>
-            </div>
+            {/* User Details */}
+            <div className="w-full">
+              <div className="py-1 flex items-center gap-1 text-gray-500">
+                <h2 className="pr-2 text-xl text-black font-semibold capitalize">
+                  {user?.username}
+                </h2>
+                <Link
+                  onClick={handleUserNavigation}
+                  className="font-medium cursor-pointer"
+                >
+                  @{user?.username}
+                </Link>
+                <BsDot size={20} />
+                <span className="text-sm">{formatDate}</span>
 
-            {/* Icons Row */}
-            <div className="pt-2 flex items-center gap-5 text-gray-500  ">
-              <button
-                onClick={handleLikePost}
-                className="flex items-center gap-1 cursor-pointer"
-              >
-                {!isLiked && !isLiking && (
-                  <GoHeart size={20} className="hover:text-red-500" />
+                {isMyProfile && (
+                  <button
+                    onClick={handleDeletePost}
+                    className="px-3 py-2 ml-auto hover:bg-gray-200 rounded-full"
+                  >
+                    <IoTrashOutline color="red" />
+                  </button>
                 )}
-                {isLiked && !isLiking && (
-                  <GoHeartFill color="#fb2c36" size={20} />
-                )}
-                <span>{likes?.length}</span>
-              </button>
+              </div>
 
-              {/* <div className="flex items-center gap-1 cursor-pointer">
+              <div className="cursor-pointer" onClick={handlePostNavigation}>
+                <p className="px-1 py-2">{text}</p>
+              </div>
+
+              {/* Icons Row */}
+              <div className="pt-2 flex items-center gap-5 text-gray-500  ">
+                <button
+                  onClick={handleLikePost}
+                  className="flex items-center gap-1 cursor-pointer"
+                >
+                  {!isLiked && !isLiking && (
+                    <GoHeart size={20} className="hover:text-red-500" />
+                  )}
+                  {isLiked && !isLiking && (
+                    <GoHeartFill color="#fb2c36" size={20} />
+                  )}
+                  <span>{likes?.length}</span>
+                </button>
+
+                {/* <div className="flex items-center gap-1 cursor-pointer">
                 <FaRegComment size={18} />
                 <span>{comments?.length}</span>
               </div> */}
 
-              <button
-                className="p-2 cursor-pointer hover:rounded-full hover:bg-gray-200"
-                onClick={() => handleCopy(_id)}
-              >
-                <IoShareSocialOutline size={18} />
-              </button>
+                <button
+                  className="p-2 cursor-pointer hover:rounded-full hover:bg-gray-200"
+                  onClick={() => handleCopy(_id)}
+                >
+                  <IoShareSocialOutline size={18} />
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      </>
     </>
   );
 };

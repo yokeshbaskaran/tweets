@@ -5,9 +5,10 @@ import { RxAvatar } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import useFollow from "../hooks/useFollow";
 import toast from "react-hot-toast";
+import Suggestion from "./skeleton/Suggestion";
 
 const Suggested = () => {
-  const { data: suggestedUsers } = useQuery({
+  const { data: suggestedUsers, isLoading } = useQuery({
     queryKey: ["suggestedUsers"],
     queryFn: async () => {
       try {
@@ -25,7 +26,10 @@ const Suggested = () => {
   const { follow, isPending } = useFollow();
 
   return (
-    <div className="max-md:hidden w-[220px] px-2 py-2">
+    <div className="max-md:hidden w-[250px] px-1 py-2">
+      <h2 className="px-2 py-3 text-lg text-appColor">Suggested Users</h2>
+
+      {/* Suggested All Users  */}
       <div>
         {suggestedUsers?.length > 0 && (
           <UserSuggestions
@@ -33,6 +37,14 @@ const Suggested = () => {
             follow={follow}
             isPending={isPending}
           />
+        )}
+
+        {isLoading && (
+          <>
+            {[...Array(5)].map((_, i) => (
+              <Suggestion key={i} />
+            ))}
+          </>
         )}
       </div>
     </div>
@@ -48,9 +60,9 @@ export const UserSuggestions = ({ suggestedUsers, follow }) => {
   };
 
   return (
-    <div className="px-2">
-      <div>
-        <h2 className="py-3 text-lg text-appColor">Suggested Users</h2>
+    <>
+      {/* Single Suggested user */}
+      <div className="px-2">
         <div>
           {suggestedUsers &&
             suggestedUsers.map((post) => (
@@ -92,15 +104,15 @@ export const UserSuggestions = ({ suggestedUsers, follow }) => {
                 </div>
 
                 {/* divider  */}
-                <div className="relative my-2">
+                <div className="relative m-2">
                   <div className="absolute inset-0 flex items-center">
-                    <span className="w-full border-t border-gray-400"></span>
+                    <span className="w-full border-t border-gray-300"></span>
                   </div>
                 </div>
               </div>
             ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };

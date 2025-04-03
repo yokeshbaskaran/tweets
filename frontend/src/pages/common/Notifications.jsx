@@ -64,12 +64,19 @@ const Notifications = () => {
         </button>
       </div>
 
-      {notifications?.map((notification) => (
-        <SingleNotification
-          key={notification._id}
-          notification={notification}
-        />
-      ))}
+      {notifications ? (
+        notifications?.map((notification) => (
+          <SingleNotification
+            key={notification._id}
+            notification={notification}
+          />
+        ))
+      ) : (
+        <div className="py-5 text-lg text-left text-gray-400">
+          Loading Notifications
+        </div>
+      )}
+
       {notifications?.length === 0 && (
         <div className="py-10 text-center">
           <span className="text-lg text-gray-500">No Notifications yet!</span>

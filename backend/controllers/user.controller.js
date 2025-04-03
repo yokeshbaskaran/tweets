@@ -90,6 +90,41 @@ const followUnFollowUser = async (req, res) => {
   }
 };
 
+//remove a follower
+const removeFollower = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.user._id;
+    // console.log("ids", id, userId);
+
+    if (id.toString() === userId.toString())
+      return res.status(404).json({ message: "you can't remove yourself" });
+
+    const currentUser = await User.findById(userId);
+    const removeUser = await User.findById(id);
+
+    if (!removeUser || !currentUser)
+      return res.status(404).json({ message: "user not found!" });
+
+    const isFollower = currentUser.followers.includes(id);
+
+    if (!isFollower) {
+      return res.status(400).json({ message: "user is not your follower" });
+    }
+
+    //remove user
+    await User.findByIdAndUpdate(userId, { $pull: { followers: id } });
+    await User.findByIdAndUpdate(id, { $pull: { following: userId } });
+
+    const text = `You ${currentUser.username} removed the follower-${removeUser.username}`;
+
+    res.status(200).json({ text });
+  } catch (error) {
+    console.log("Error in followUnFollowUser", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getSuggestedUsers = async (req, res) => {
   try {
     const userId = req.user._id;
@@ -205,6 +240,7 @@ const updateUser = async (req, res) => {
 module.exports = {
   getUserProfile,
   getUserFollow,
+  removeFollower,
   getSuggestedUsers,
   followUnFollowUser,
   updateUser,

@@ -6,13 +6,14 @@ import { IoArrowBackOutline } from "react-icons/io5";
 import useFollow from "../../hooks/useFollow";
 import toast from "react-hot-toast";
 import { RiUserUnfollowLine } from "react-icons/ri";
+import Follow from "../../components/skeleton/Follow";
 
 const Following = () => {
   const { authUser } = useAppContext();
   const navigate = useNavigate();
 
   // console.log("authUser", authUser);
-  const { data } = useGetUserFollow();
+  const { data, isLoading } = useGetUserFollow();
   // console.log("users", data.following);
 
   const following = data?.following;
@@ -28,18 +29,26 @@ const Following = () => {
         <h2 className="px-2 py-3 text-2xl font-semibold">following </h2>
       </button>
 
-      {authUser?.following.length ? (
+      {authUser?.following?.length ? (
         <section className="py-5 flex flex-col gap-3">
-          {/* User profile  */}
+          {/* List of all followers  */}
 
           {following?.map((following) => (
             <Singlefollowing key={following._id} following={following} />
           ))}
         </section>
       ) : (
-        <div className="py-10 text-gray-500 text-center">
+        <div className="py-10 text-center text-gray-500">
           <span>No following yet!</span>
         </div>
+      )}
+
+      {isLoading && (
+        <>
+          {[...Array(5)].map((_, i) => (
+            <Follow key={i} />
+          ))}
+        </>
       )}
     </div>
   );

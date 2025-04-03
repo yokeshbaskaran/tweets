@@ -106,7 +106,7 @@ const CreatePost = () => {
                 />
               ))
           ) : (
-            <div className="py-10 text-gray-500 text-center">
+            <div className="py-10 text-gray-500">
               <span>Loading Posts...</span>
             </div>
           )}

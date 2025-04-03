@@ -3,16 +3,17 @@ import { RxAvatar } from "react-icons/rx";
 import { useAppContext } from "../../context/AppContext";
 import { useGetUserFollow } from "../../hooks/useGetUserProfile";
 import { IoArrowBackOutline } from "react-icons/io5";
-import useFollow from "../../hooks/useFollow";
 import toast from "react-hot-toast";
 import { RiUserUnfollowLine } from "react-icons/ri";
+import Follow from "../../components/skeleton/Follow";
+import useRemoveUser from "../../hooks/useRemoveUser";
 
 const Followers = () => {
   const { authUser } = useAppContext();
   const navigate = useNavigate();
 
   // console.log("authUser", authUser);
-  const { data } = useGetUserFollow();
+  const { data, isLoading } = useGetUserFollow();
   // console.log("users", data.followers);
 
   const followers = data?.followers;
@@ -28,18 +29,26 @@ const Followers = () => {
         <h2 className="px-2 py-3 text-2xl font-semibold">Followers </h2>
       </button>
 
-      {authUser?.followers.length ? (
+      {authUser?.followers?.length ? (
         <section className="py-5 flex flex-col gap-3">
-          {/* User profile  */}
+          {/* List of all followers  */}
 
           {followers?.map((follower) => (
             <SingleFollower key={follower._id} follower={follower} />
           ))}
         </section>
       ) : (
-        <div className="py-10 text-gray-500 text-center">
-          <span>No followers yet!</span>
+        <div className="py-10 text-center text-gray-500">
+          <span>No following yet!</span>
         </div>
+      )}
+
+      {isLoading && (
+        <>
+          {[...Array(5)].map((_, i) => (
+            <Follow key={i} />
+          ))}
+        </>
       )}
     </div>
   );
@@ -50,12 +59,12 @@ export default Followers;
 export const SingleFollower = ({ follower }) => {
   console.log("follower", follower);
 
-  const { follow } = useFollow();
+  const { remove } = useRemoveUser();
 
   const handleRemoveUser = () => {
-    follow(follower?._id);
+    remove(follower?._id);
 
-    toast(`Unfollowed ${follower?.username}`, {
+    toast(`you removed ${follower?.username}`, {
       icon: <RiUserUnfollowLine color="red" />,
     });
   };
