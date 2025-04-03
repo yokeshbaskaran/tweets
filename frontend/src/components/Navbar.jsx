@@ -64,11 +64,11 @@ const Navbar = () => {
       icon: <CgProfile size={25} />,
       linkName: "Profile",
     },
-    // {
-    //   link: "/search",
-    //   icon: <IoSearch size={25} />,
-    //   linkName: "Search",
-    // },
+    {
+      link: "/search",
+      icon: <IoSearch size={25} />,
+      linkName: "Search",
+    },
     {
       link: "/notifications",
       icon: <TbBellRinging size={25} />,

@@ -1,11 +1,7 @@
 import { Outlet } from "react-router-dom";
 import Navbar from "../../components/Navbar";
-import Suggested from "../../components/Suggested";
-import { useAppContext } from "../../context/AppContext";
 
 const Layout = () => {
-  const { authUser } = useAppContext();
-
   return (
     <div className="w-full h-screen md:flex px-2">
       <Navbar />
@@ -16,9 +12,7 @@ const Layout = () => {
         </div>
       </div>
 
-      <div className="max-md:hidden w-[200px] py-1">
-        {authUser && <Suggested />}
-      </div>
+      <div className="max-md:hidden md:w-[50px] lg:w-[200px] py-1"></div>
     </div>
   );
 };

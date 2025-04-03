@@ -60,15 +60,15 @@ export const UserSuggestions = ({ suggestedUsers, follow }) => {
   return (
     <>
       {/* Single Suggested user */}
-      <div className="px-2">
-        <h2 className="px-2 py-3 text-lg text-appColor">Suggested Users</h2>
+      <div className="px-3">
+        <h2 className="text-lg text-appColor">Suggested Users</h2>
 
         <div>
           {suggestedUsers &&
             suggestedUsers.map((post) => (
               <div key={post._id} className="py-2">
                 <div className="flex items-start gap-2">
-                  <div className="size-14 -mt-1 object-cover rounded-full">
+                  <div className="size-14 md:hidden -mt-1 object-cover rounded-full">
                     {post?.profileImg ? (
                       <img
                         src={post.profileImg}

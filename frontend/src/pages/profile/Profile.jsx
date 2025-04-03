@@ -164,10 +164,6 @@ const Profile = () => {
           {/* Only display the UserProfile Skeleton when loading  */}
           {isLoading && <MyProfile />}
         </div>
-
-        <div>
-          <Suggested />
-        </div>
       </div>
     </>
   );

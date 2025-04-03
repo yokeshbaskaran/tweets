@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const {
+  allUsers,
   getUserProfile,
   getUserFollow,
   removeFollower,
@@ -12,6 +13,7 @@ const {
 } = require("../controllers/user.controller");
 const protectRoute = require("../middleware/protectedRoute");
 
+router.get("/all", protectRoute, allUsers);
 router.get("/profile/:username", protectRoute, getUserProfile);
 router.get("/follow", protectRoute, getUserFollow);
 router.get("/suggested", protectRoute, getSuggestedUsers);

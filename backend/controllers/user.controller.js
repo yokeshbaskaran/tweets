@@ -1,6 +1,18 @@
 const Notification = require("../models/notification");
 const User = require("../models/user");
 
+const allUsers = async (req, res) => {
+  try {
+    const user = await User.find().select("-password");
+    if (!user) return res.status(404).json({ message: "No user created" });
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.log("Error in allUsers", error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const getUserProfile = async (req, res) => {
   const { username } = req.params;
   // console.log("username", username);
@@ -238,6 +250,7 @@ const updateUser = async (req, res) => {
 };
 
 module.exports = {
+  allUsers,
   getUserProfile,
   getUserFollow,
   removeFollower,
