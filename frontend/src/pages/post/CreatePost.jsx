@@ -7,6 +7,7 @@ import axios from "axios";
 import { useGetAllPosts } from "../../hooks/useGetUserPosts";
 import { Link } from "react-router-dom";
 import SinglePost from "./SinglePost";
+import Post from "../../components/skeleton/Post";
 
 const CreatePost = () => {
   const [text, setText] = useState("");
@@ -106,9 +107,11 @@ const CreatePost = () => {
                 />
               ))
           ) : (
-            <div className="py-10 text-gray-500">
-              <span>Loading Posts...</span>
-            </div>
+            <>
+              {[...Array(5)].map((_, i) => (
+                <Post key={i} />
+              ))}
+            </>
           )}
 
           {recentPosts?.length === 0 && (

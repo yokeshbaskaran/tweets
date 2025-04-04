@@ -8,9 +8,10 @@ import { RxAvatar } from "react-icons/rx";
 import { BsDot } from "react-icons/bs";
 import { GoHeart } from "react-icons/go";
 import { GoHeartFill } from "react-icons/go";
-import { IoShareSocialOutline, IoTrashOutline } from "react-icons/io5";
 import { FaRegComment } from "react-icons/fa";
+import { IoShareSocialOutline, IoTrashOutline } from "react-icons/io5";
 import toast from "react-hot-toast";
+import Post from "../../components/skeleton/Post";
 
 const PostPage = () => {
   const { id } = useParams();
@@ -64,7 +65,7 @@ const PostPage = () => {
         </button>
 
         {/* Post is here  */}
-        {!isLoading ? (
+        {!isLoading && (
           <div className="my-1 md:px-3 md:py-3">
             <div className="w-full px-2 flex flex-col">
               {/* Profile Image Container */}
@@ -186,8 +187,12 @@ const PostPage = () => {
               </div>
             )}
           </div>
-        ) : (
-          <div className="py-5 text-gray-400">loading post...</div>
+        )}
+
+        {isLoading && (
+          <div className="py-5 text-gray-400">
+            <Post />
+          </div>
         )}
       </div>
     </>

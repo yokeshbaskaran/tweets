@@ -7,9 +7,10 @@ import axios from "axios";
 import { API_URL, useAppContext } from "../../context/AppContext";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
+import Notify from "../../components/skeleton/Notify";
 
 const Notifications = () => {
-  const { data: notifications } = useQuery({
+  const { data: notifications, isLoading } = useQuery({
     queryKey: ["notifications"],
     queryFn: async () => {
       try {
@@ -64,16 +65,19 @@ const Notifications = () => {
         </button>
       </div>
 
-      {notifications ? (
+      {!isLoading &&
         notifications?.map((notification) => (
           <SingleNotification
             key={notification._id}
             notification={notification}
           />
-        ))
-      ) : (
+        ))}
+
+      {isLoading && (
         <div className="py-5 text-lg text-left text-gray-400">
-          Loading Notifications
+          {[...Array(5)].map((_, idx) => (
+            <Notify key={idx} />
+          ))}
         </div>
       )}
 

@@ -63,6 +63,9 @@ const SinglePost = ({ post }) => {
           post._id === _id ? { ...post, likes: updatedLikes } : post
         );
       });
+
+      //notifications
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 
