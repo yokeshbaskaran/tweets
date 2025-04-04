@@ -74,7 +74,7 @@ const Search = () => {
                     )
                     ?.map((user, idx) => <SearchedUser key={idx} user={user} />)
                 ) : (
-                  <p>Username not found!</p>
+                  <p className="text-gray-500">Username not found!</p>
                 )
               ) : (
                 ""

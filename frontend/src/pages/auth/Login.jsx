@@ -19,10 +19,6 @@ const Authpage = () => {
   };
 
   const handleLogin = async ({ username, password }) => {
-    // console.log({ username, password });
-    if (username === "" || password === "") {
-      toast.error("Enter details properly!");
-    }
     try {
       const res = await axios.post(
         API_URL + "/auth/login",
@@ -35,11 +31,12 @@ const Authpage = () => {
 
       const data = await res.data;
       // console.log("dta", data);
-      navigate("/");
       return data;
     } catch (error) {
-      console.error("Login Error:", error.message);
-      toast.error("Login failed! Retry");
+      const errMessage =
+        error.response?.data?.error || "Register Failed! Retry Again!";
+      // console.error("Signup error:", errMessage);
+      throw new Error(errMessage);
     }
   };
 
@@ -47,12 +44,25 @@ const Authpage = () => {
     mutationFn: (formData) => handleLogin(formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
+
+      toast.success("Login Success");
+      navigate("/");
+    },
+    onError: (err) => {
+      console.error("Login failed!", err.message);
+      toast.error(err.message);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("formData", formData);
+
+    if (formData.username === "" || formData.password === "") {
+      toast.error("Enter details to login!");
+      return null;
+    }
+
     mutate(formData);
   };
 
@@ -85,7 +95,7 @@ const Authpage = () => {
             <p className="text-gray-500 text-lg">Enter your details to login</p>
           </div>
 
-          <form className="lg:px-3">
+          <form onSubmit={handleSubmit} className="lg:px-3">
             <div className="mt-5">
               <input
                 name="username"
@@ -108,22 +118,24 @@ const Authpage = () => {
               />
             </div>
 
-            <button
-              onClick={handleSubmit}
-              className="w-full mt-5 my-2 p-2 text-white bg-appColor rounded capitalize"
-            >
+            <button className="w-full mt-5 p-2 text-white bg-appColor rounded capitalize">
               login
             </button>
           </form>
 
-          <div>
+          {/* Error message  */}
+          <div
+            className={`py-1 transition-opacity duration-300 ${
+              isError && error ? "block" : "hidden"
+            }`}
+          >
             {isError && error && (
-              <p className="text-red-500 text-center">{error.message}</p>
+              <p className="text-red-400 text-center">{error.message}</p>
             )}
           </div>
 
           {/* divider  */}
-          <div className="relative my-4">
+          <div className="relative mt-1 mb-4">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-gray-400"></span>
             </div>
@@ -132,6 +144,7 @@ const Authpage = () => {
             </div>
           </div>
 
+          {/*Redirect button  */}
           <button
             className="text-center hover:underline hover:text-appColor"
             onClick={() => navigate("/signup")}

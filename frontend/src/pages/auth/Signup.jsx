@@ -21,9 +21,7 @@ const Signup = () => {
 
   const handleRegister = async ({ username, email, password }) => {
     // console.log({ username, email, password });
-    if (username === "" || email === "" || password === "") {
-      toast.error("Enter details properly!");
-    }
+
     try {
       const res = await axios.post(
         API_URL + "/auth/signup",
@@ -37,11 +35,12 @@ const Signup = () => {
 
       const data = await res.data;
       // console.log("dta", data);
-      navigate("/");
       return data;
     } catch (error) {
-      console.error("Signup Error:", error.message);
-      toast.error("Register failed! Retry");
+      const errMessage =
+        error.response?.data?.error || "Register Failed! Retry Again!";
+      // console.error("Signup error:", errMessage);
+      throw new Error(errMessage);
     }
   };
 
@@ -49,12 +48,29 @@ const Signup = () => {
     mutationFn: (formData) => handleRegister(formData),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["authUser"] });
+
+      toast.success("User Registered success");
+      navigate("/");
+    },
+    onError: (err) => {
+      console.error("Register failed!", err.message);
+      toast.error(err.message);
     },
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // console.log("formData", formData);
+
+    if (
+      formData.username === "" ||
+      formData.email === "" ||
+      formData.password === ""
+    ) {
+      toast.error("Enter details to register");
+      return null;
+    }
+
     mutate(formData);
   };
 
@@ -70,7 +86,7 @@ const Signup = () => {
       </div>
 
       {/* right section */}
-      <div className="w-full lg:w-1/2 py-8 lg:p-8">
+      <div className="w-full lg:w-1/2 py-5 lg:p-6">
         <div className="mx-auto max-w-md flex flex-col justify-center space-y-3">
           <div className="flex flex-col items-start lg:items-center justify-center">
             <img
@@ -87,7 +103,7 @@ const Signup = () => {
             </p>
           </div>
 
-          <form className="lg:px-3">
+          <form className="lg:px-3" onSubmit={handleSubmit}>
             <div className="mt-5">
               <input
                 name="username"
@@ -121,22 +137,25 @@ const Signup = () => {
               />
             </div>
 
-            <button
-              onClick={handleSubmit}
-              className="w-full mt-5 my-2 p-2 text-white bg-appColor rounded capitalize"
-            >
+            <button className="w-full mt-5 p-2 text-white bg-appColor rounded capitalize">
               register
             </button>
           </form>
 
-          <div>
+          {/* Error message  */}
+          <div
+            className={`py-1 transition-opacity duration-300 ${
+              isError && error ? "block" : "hidden"
+            }`}
+          >
             {isError && error && (
-              <p className="text-red-500 text-center">{error.message}</p>
+              <p className="text-red-400 text-center">{error.message}</p>
             )}
           </div>
 
           {/* divider  */}
-          <div className="relative my-4">
+
+          <div className="relative mt-2 mb-4">
             <div className="absolute inset-0 flex items-center">
               <span className="w-full border-t border-gray-400"></span>
             </div>
@@ -145,7 +164,7 @@ const Signup = () => {
             </div>
           </div>
 
-          {/* Login/Signup button  */}
+          {/*Redirect button */}
           <button
             className="text-center hover:underline hover:text-appColor"
             onClick={() => navigate("/login")}
