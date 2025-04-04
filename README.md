@@ -1,29 +1,36 @@
-# Tweets
+# 🚀 Share Your Thoughts Through Tweets
 
-Deploying MERN Stack in Render.com
+📌 **Project Live Demo:** [Tweets of Messages](https://tweets-of-messages.onrender.com)
 
-### step-1: server.js (file)
+---
 
-// --------------------Deployment---------------
-const path = require("path"); // add the path
-app.use(express.static(path.join(\_\_dirname, "..", "frontend", "dist")));
+## 🛠 Tech Stack
 
-app.get("\*", (req, res) => {
-res.sendFile(path.join(\_\_dirname, "..", "frontend", "dist", "index.html"));
-});
+- **Frontend:** React.js & Tailwind CSS and React Query(for state management)
+- **Backend:** Node.js & Express.js
+- **Database:** MongoDB (Mongoose)
+- **Authentication:** JWT (JSON Web Token)
+- **Hosting:** Render
 
-//--------------------Deployment---------------
+---
 
-and
+## 📢 Features
 
-origin: ["http://localhost:5173", "https://tweets-of-messages.onrender.com/"] // add the link cors
+✅ User authentication (JWT-based login & signup)  
+✅ Create, read, update, and delete (CRUD) tweets  
+✅ Like and interact with tweets  
+✅ Responsive design for mobile and desktop  
+✅ Error handling & toast notifications
 
-### step-2: add the command in package.json (back-end)
+- Inspired (UI) by Twitter and Random user.
 
-"build": "npm install && npm install --prefix ../frontend && npm run build --prefix ../frontend"
+---
 
-### step-3: add link in (front-end) -> context = vite_api_url
+## 🚀 Installation & Setup
 
-render link-> https://tweets-of-messages.onrender.com/
+### **Clone the repository**
 
-### step-4: after pushint to GITHUB and go to render and add the .env variables from both front and backend
+```bash
+git clone https://github.com/yourusername/tweets-of-messages.git
+cd tweets-of-messages
+```
