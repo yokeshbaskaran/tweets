@@ -10,6 +10,7 @@ import useFollow from "../../hooks/useFollow";
 import toast from "react-hot-toast";
 import { FaRegUser } from "react-icons/fa";
 import MyProfile from "../../components/skeleton/MyProfile";
+import Post from "../../components/skeleton/Post";
 
 const Profile = () => {
   const { authUser } = useAppContext();
@@ -18,7 +19,8 @@ const Profile = () => {
   // console.log("useParams", username);
 
   const { data: user, isLoading } = useGetUserProfile(username);
-  const { data: userPosts } = useGetUserPosts(username);
+  const { data: userPosts, isLoading: postIsLoading } =
+    useGetUserPosts(username);
   const { follow } = useFollow();
 
   const isFollowed = authUser?.following.includes(user?._id);
@@ -95,7 +97,7 @@ const Profile = () => {
             <div className="flex justify-center my-5 text-center gap-5">
               <div>
                 <h3 className="text-lg font-semibold">
-                  {userPosts?.length ? userPosts?.length : 0}
+                  {postIsLoading ? "0" : userPosts?.length}
                 </h3>
                 <p className="text-gray-500 text-sm">Posts</p>
               </div>
@@ -141,15 +143,20 @@ const Profile = () => {
                 </h3>
 
                 {/* Single Post */}
-                <div className="pt-3">
+                <div className="mt-3">
                   {userPosts ? (
                     userPosts.map((post) => (
                       <SinglePost key={post._id} post={post} />
                     ))
                   ) : (
-                    <div className="py-10 text-gray-500 text-center">
-                      <span>Loading Posts...</span>
-                    </div>
+                    <>
+                      {/* Single Post skeleton */}
+                      <div className="my-3">
+                        {[...Array(2)].map((_, i) => (
+                          <Post key={i} />
+                        ))}
+                      </div>
+                    </>
                   )}
                 </div>
               </div>

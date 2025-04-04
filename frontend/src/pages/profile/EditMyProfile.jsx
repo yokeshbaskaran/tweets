@@ -160,7 +160,10 @@ const EditMyProfile = () => {
             Cancel
           </button>
 
-          <button className="px-4 py-2 bg-appColor hover:opacity-80 text-white rounded">
+          <button
+            disabled
+            className="px-4 py-2 bg-appColor hover:opacity-80 text-white rounded"
+          >
             Update
           </button>
         </div>

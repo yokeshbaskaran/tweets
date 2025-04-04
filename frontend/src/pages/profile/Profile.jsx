@@ -19,7 +19,9 @@ const Profile = () => {
   const sinceFromDate = formatSinceDate(authUser?.createdAt);
   // console.log("sinceFromDate", sinceFromDate);
 
-  const { data: myPosts } = useGetUserPosts(authUser?.username);
+  const { data: myPosts, isLoading: postIsLoading } = useGetUserPosts(
+    authUser?.username
+  );
   // console.log("myPosts", myPosts);
 
   return (
@@ -82,7 +84,9 @@ const Profile = () => {
               {/* Stats */}
               <div className="flex justify-center mt-5 mb-8 text-center gap-5">
                 <div>
-                  <h3 className="text-lg font-semibold">{myPosts?.length}</h3>
+                  <h3 className="text-lg font-semibold">
+                    {postIsLoading ? "0" : myPosts?.length}
+                  </h3>
                   <p className="text-gray-500 text-sm">Posts</p>
                 </div>
 

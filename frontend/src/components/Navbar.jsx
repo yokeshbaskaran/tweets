@@ -44,8 +44,7 @@ const Navbar = () => {
   const handleLogout = () => {
     if (confirm("Are you sure want to logout!")) {
       mutate();
-      toast.success("Logout Success");
-      // location.reload();
+      location.reload();
     }
   };
 
