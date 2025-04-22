@@ -5,7 +5,7 @@
 - user -> username, email, pwsd, followers, following,timestamps
 - post -> text, img, userDetails, likes, comment(user, text)
 
-### Packages used:
+## Packages used:
 
 - Express
 - Mongoose
@@ -14,4 +14,13 @@
 - cors
 - cookie-parser
 - dotenv
-- jsonwebtoken
+- json web token
+
+## Environment Variables(.env):
+
+PORT=
+MONGO_DB_URL=
+JWT_SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_SECRET=
+CLOUDINARY_SECRET_APIKEY=

@@ -1,4 +1,7 @@
-# 🚀 Share Your Thoughts Through Tweets
+# 🚀 Share your Thoughts using Tweets
+
+- - Tweets - Share your Thoughts through Tweets and Share it in real world!
+- - Inspired (UI Design) by Twitter and Random user.
 
 📌 **Project Live Demo:** [Tweets of Messages](https://tweets-of-messages.onrender.com)
 
@@ -22,8 +25,6 @@
 ✅ Responsive design for mobile and desktop  
 ✅ Error handling & toast notifications
 
-- Inspired (UI) by Twitter and Random user.
-
 ---
 
 ## 🚀 Installation & Setup
@@ -31,6 +32,20 @@
 ### **Clone the repository**
 
 ```bash
-git clone https://github.com/yourusername/tweets-of-messages.git
-cd tweets-of-messages
+git clone https://github.com/yokeshbaskaran/tweets.git
+cd tweets
+```
+
+### Set up environment variables
+
+```bash
+PORT=
+MONGO_DB_URL=
+JWT_SECRET=
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_SECRET=
+CLOUDINARY_SECRET_APIKEY=
+
+VITE_SERVER_APP_URL=
+
 ```

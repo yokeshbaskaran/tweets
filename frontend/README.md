@@ -2,7 +2,7 @@
 
 Front-end
 
-### Packages used:
+## Packages used:
 
 - React Router
 - React Query
@@ -10,3 +10,7 @@ Front-end
 - axios
 - react-hot-toast
 - react-icons
+
+## Environment Variables(.env):
+
+VITE_SERVER_APP_URL=
