@@ -86,3 +86,11 @@ body {
 .yoki {
   @apply border-2 border-red-500;
 }
+
+/* text - ellipsis */
+.username {
+  max-width: 130px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

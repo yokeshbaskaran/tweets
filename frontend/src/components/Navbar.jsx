@@ -300,10 +300,10 @@ const Navbar = () => {
                 </Link>
 
                 <div className="flex flex-col items-start">
-                  <span className="text-lg font-semibold capitalize">
+                  <span className="text-lg font-semibold capitalize username">
                     {authUser?.username}
                   </span>
-                  <Link to="myprofile" className="text-gray-500">
+                  <Link to="myprofile" className="text-gray-500 username">
                     @{authUser?.username}
                   </Link>
                 </div>
