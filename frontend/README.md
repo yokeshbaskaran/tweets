@@ -1,6 +1,4 @@
-# React + Vite
-
-Front-end
+# Front-end with React + Vite
 
 ## Packages used:
 
