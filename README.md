@@ -6,12 +6,12 @@ A full-stack social media–style web application where users can share thoughts
 
 ## 🚀 Features
 
-🐤 Create, read, update, and delete tweets (CRUD)
-🔐 Secure JWT-based authentication (Login / Signup)
-❤️ Like and interact with tweets
-📱 Fully responsive design (mobile + desktop)
-⚡ Fast UI with React Query caching
-🔔 Toast notifications & proper error handling
+🐤 Create, read, update, and delete tweets (CRUD)  
+🔐 Secure JWT-based authentication (Login / Signup)  
+❤️ Like and interact with tweets  
+📱 Fully responsive design (mobile + desktop)  
+⚡ Fast UI with React Query caching  
+🔔 Toast notifications & proper error handling  
 🎨 Twitter-inspired UI design
 
 ## 🎨 Project Description
