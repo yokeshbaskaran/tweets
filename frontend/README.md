@@ -1,6 +1,6 @@
 # Front-end with React + Vite
 
-## Packages used:
+### Packages used:
 
 - React Router
 - React Query
@@ -9,6 +9,19 @@
 - react-hot-toast
 - react-icons
 
-## Environment Variables(.env):
+### Install Dependencies
 
-- VITE_SERVER_APP_URL=
+```bash
+npm install react-router-dom
+npm install tailwindcss
+npm install axios
+npm install @tanstack/react-query
+npm install react-hot-toast
+npm install react-icons
+```
+
+### Environment Variables(.env):
+
+```env
+VITE_SERVER_APP_URL=
+```

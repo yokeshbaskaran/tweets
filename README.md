@@ -24,17 +24,7 @@ This project highlights **end-to-end application development**, from UI to datab
 - Backend APIs handle authentication, authorization, and data persistence
 - Frontend consumes REST APIs with optimized state management
 
-## 🎯 Live Demo
-
-```bash
-🔗 **Project Live Demo:** [https://tweets-of-messages.onrender.com](https://tweets-of-messages.onrender.com)
-```
-
-## 🖼️ Preview
-
-![Image](https://github.com/user-attachments/assets/bcd150a6-8cb0-4151-9538-356991c716c2)
-
-## 🛠 Tech Stack
+## 🛠️ Tech Stack
 
 ### Frontend
 
@@ -68,7 +58,7 @@ This project highlights **end-to-end application development**, from UI to datab
 4. Application is deployed to **Render**
 5. Live app served securely over HTTPS
 
-## 🚀 Installation & Setup (Local)
+## 📦 Installation & Setup:
 
 ### Clone the repository
 
@@ -77,45 +67,10 @@ git clone https://github.com/yokeshbaskaran/tweets.git
 cd tweets
 ```
 
-### Backend Environment Variables
+## 🎯 Live Demo
 
-```env
-PORT=
-MONGO_DB_URL=
-JWT_SECRET=
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_SECRET=
-CLOUDINARY_SECRET_APIKEY=
-```
+🔗 **Project Live Demo:** [https://tweets-of-messages.onrender.com](https://tweets-of-messages.onrender.com)
 
-### Frontend Environment Variables
+## 🖼️ Preview
 
-```env
-VITE_SERVER_APP_URL=
-```
-
-### Install Dependencies
-
-#### Frontend
-
-```bash
-npm install react-router-dom
-npm install tailwindcss
-npm install axios
-npm install @tanstack/react-query
-npm install react-hot-toast
-npm install react-icons
-```
-
-#### Backend
-
-```bash
-npm install express
-npm install mongoose
-npm install dotenv
-npm install cors
-npm install bcryptjs
-npm install cookie-parser
-npm install cloudinary
-npm install -D nodemon
-```
+![Image](https://github.com/user-attachments/assets/bcd150a6-8cb0-4151-9538-356991c716c2)
