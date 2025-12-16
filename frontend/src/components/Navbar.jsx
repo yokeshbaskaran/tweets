@@ -105,6 +105,10 @@ const Navbar = () => {
 
   const navDetails = authUser ? authenticatedNav : unauthenticatedNav;
 
+  // text-truncate
+  const truncate = (text, limit = 10) =>
+    text?.length > limit ? text.slice(0, limit) + "..." : text;
+
   return (
     <div>
       {/* Backdrop Overlay */}
@@ -171,10 +175,10 @@ const Navbar = () => {
                   to="myprofile"
                   className="text-lg font-semibold capitalize"
                 >
-                  {authUser?.username}
+                  {truncate(authUser?.username)}
                 </Link>
                 <Link to="myprofile" className="text-gray-500">
-                  @{authUser?.username}
+                  @{truncate(authUser?.username)}
                 </Link>
               </div>
             </div>
@@ -301,10 +305,10 @@ const Navbar = () => {
 
                 <div className="flex flex-col items-start">
                   <span className="text-lg font-semibold capitalize username">
-                    {authUser?.username}
+                    {truncate(authUser?.username)}
                   </span>
                   <Link to="myprofile" className="text-gray-500 username">
-                    @{authUser?.username}
+                    @{truncate(authUser?.username)}
                   </Link>
                 </div>
               </div>
