@@ -1,77 +1,8 @@
-<!-- # 🚀 Share your Thoughts using Tweets
-
-- Tweets - Share your Thoughts through Tweets and Share it in real world!
-- Inspired (UI Design) by Twitter UI and Random user.
-
-📌 **Project Live Demo:** [Tweets of Messages](https://tweets-of-messages.onrender.com)
-
-## 🛠 Tech Stack
-
-- **Frontend:** React.js, Tailwind CSS & React Query
-- **Backend:** Node.js & Express.js
-- **Database:** MongoDB (Mongoose)
-- **Authentication:** JWT (JSON Web Token)
-- **Hosting:** Render
-- **CI/CD:** GitHub Actions
-
-## 📢 Features
-
-✅ User authentication (JWT-based login & signup)
-✅ Create, read, update, and delete (CRUD) tweets
-✅ Like, share and interact with tweets.
-✅ Responsive design for mobile and desktop
-✅ Error handling & toast notifications
-
-## 🚀 Installation & Setup
-
-### **Clone the repository**
-
-```bash
-git clone https://github.com/yokeshbaskaran/tweets.git
-cd tweets
-```
-
-### Set up environment variables
-
-```bash
-PORT=
-MONGO_DB_URL=
-JWT_SECRET=
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_SECRET=
-CLOUDINARY_SECRET_APIKEY=
-
-VITE_SERVER_APP_URL=
-
-```
-
-## Packages used:
-
-#### Front-end:
-
-- npm i react-router-dom
-- npm i tailwindcss
-- npm i axios
-- npm i @tanstack/react-query
-- npm i react-hot-toast
-- npm i react-icons
-
-#### Back-end:
-
-- npm i express
-- npm i mongoose
-- npm i -D nodemon
-- npm i dotenv
-- npm i cors
-- npm i bcryptjs
-- npm i cookie-parser
-- npm i cloudinary -->
-
 # 🩵 Tweets – Share Your Thoughts
 
 A full-stack social media–style web application where users can share thoughts as tweets, interact with posts, and engage in real-time conversations. Built with **React + Node.js**, secured using **JWT authentication**, and deployed with a modern CI/CD workflow.
 
-This project demonstrates **frontend UI design, backend API development, authentication, database integration, and deployment best practices**.
+<!-- This project demonstrates **frontend UI design, backend API development, authentication, database integration, and deployment best practices**. -->
 
 ## 🚀 Features
 
@@ -85,7 +16,7 @@ This project demonstrates **frontend UI design, backend API development, authent
 
 ## 🎨 Project Description
 
-**Tweets** is a simplified Twitter-like platform designed to showcase real-world full-stack development skills.
+This project highlights **end-to-end application development**, from UI to database.
 
 - Users can sign up and log in securely
 - Authenticated users can create and manage tweets
@@ -93,7 +24,15 @@ This project demonstrates **frontend UI design, backend API development, authent
 - Backend APIs handle authentication, authorization, and data persistence
 - Frontend consumes REST APIs with optimized state management
 
-This project highlights **end-to-end application development**, from UI to database.
+## 🎯 Live Demo
+
+```bash
+🔗 **Project Live Demo:** [https://tweets-of-messages.onrender.com](https://tweets-of-messages.onrender.com)
+```
+
+## 🖼️ Preview
+
+![Image](https://github.com/user-attachments/assets/bcd150a6-8cb0-4151-9538-356991c716c2)
 
 ## 🛠 Tech Stack
 
@@ -128,11 +67,6 @@ This project highlights **end-to-end application development**, from UI to datab
 3. Frontend & backend builds are validated
 4. Application is deployed to **Render**
 5. Live app served securely over HTTPS
-
-## 🎯 Live Demo
-
-🔗 **Project Live Demo:**
-[https://tweets-of-messages.onrender.com](https://tweets-of-messages.onrender.com)
 
 ## 🚀 Installation & Setup (Local)
 
@@ -185,5 +119,3 @@ npm install cookie-parser
 npm install cloudinary
 npm install -D nodemon
 ```
-
-## 🖼️ Preview

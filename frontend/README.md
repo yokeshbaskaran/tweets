@@ -11,4 +11,4 @@
 
 ## Environment Variables(.env):
 
-VITE_SERVER_APP_URL=
+- VITE_SERVER_APP_URL=
